@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Dogs Training</title>
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js" integrity="sha512-f0VlzJbcEB6KiW8ZVtL+5HWPDyW1+nJEjguZ5IVnSQkvZbwBt2RfCBY0CBO1PsMAqxxrG4Di6TfsCPP3ZRwKpA=="
+		 crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.css"
+		 integrity="sha512-SZgE3m1he0aEF3tIxxnz/3mXu/u/wlMNxQSnE0Cni9j/O8Gs+TjM9tm1NX34nRQ7GiLwUEzwuE3Wv2FLz2667w=="
+		 crossorigin="anonymous" referrerpolicy="no-referrer" />
+	</head>
+	<body>
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<img src="img/logo.jpeg" style="width: 3.25rem; float: left; margin-top: 0.875rem; margin-right: 0.475rem;" />
+					<a class="navbar-brand" href="#" style="font-weight: bold;">DogsTraining</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li><a href="#">Home</a></li>
+					<li><a href="#">Breedrea</a></li>
+					<li><a href="#">Dog Works</a></li>
+					<li class="active"><a href="#">Dog Training</a></li>
+					<li><a href="#">Veterlnarian Help</a></li>
+				</ul>
+				<form class="navbar-form navbar-right" role="search">
+					<div class="form-group">
+						<input type="text" class="form-control" style="width: 40rem;" placeholder="Search">
+					</div>
+					<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Register</button>
+					<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Sign in</button>
+					<button type="button" class="btn btn-default" style="border-radius: 50%;">Help</button>
+				</form>
+			</div>
+		</nav>
+
+		<div style="padding-left: 1.875rem;">
+			<div class="row clearfix">
+				<div class="col-md-2 column">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								PRICE
+							</h3>
+						</div>
+						<div class="panel-body">
+							<input id="ex2" type="text" class="span2" data-slider-min="0" data-slider-max="2000" data-slider-step="5"
+							 data-slider-value="[0,2000]" /><br>
+							<div style="text-align: center;">
+								￡ <b> 0</b> - ￡ <b>2000</b>
+							</div>
+							<script type="text/javascript">
+								$("#ex2").slider({});
+							</script>
+						</div>
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								DISTANCE
+							</h3>
+						</div>
+						<div class="panel-body">
+							<input id="ex3" type="text" class="span2" data-slider-min="0" data-slider-max="2000" data-slider-step="5"
+							 data-slider-value="[0,2000]" />
+							<div style="text-align: center;">
+								m <b>0</b> - m <b>2000</b>
+							</div>
+							<script type="text/javascript">
+								$("#ex3").slider({});
+							</script>
+						</div>
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								RATING
+							</h3>
+						</div>
+						<div class="panel-body">
+							<div class="checkbox">
+								<label style="padding-right: 3.25rem;"><input type="checkbox" />0 Star</label>
+								<label style="padding-right: 3.25rem;"><input type="checkbox" />1 Star</label>
+							</div>
+							<div class="checkbox">
+								<label style="padding-right: 3.25rem;"><input type="checkbox" />2 Star</label>
+								<label style="padding-right: 3.25rem;"><input type="checkbox" checked="checked" />3 Star</label>
+							</div>
+							<div class="checkbox">
+								<label style="padding-right: 3.25rem;"><input type="checkbox" checked="checked" />4 Star</label>
+								<label style="padding-right: 3.25rem;"><input type="checkbox" />5 Star</label>
+							</div>
+
+
+						</div>
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								HAS AVAILABLITY
+							</h3>
+						</div>
+						<div class="panel-body ">
+							<div class="checkbox">
+								<label style="padding-right: 3.25rem;"><input type="checkbox" checked="checked" />YES</label>
+								<label style="padding-right: 3.25rem;"><input type="checkbox" />No</label>
+							</div>
+						</div>
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								TRAINFG STYLE
+							</h3>
+						</div>
+						<div class="panel-body">
+							<div class="checkbox">
+								<label style="padding-right: 3.25rem;"><input type="checkbox" checked="checked" />Positive ReInfo</label>
+							</div>
+							<div class="checkbox">
+								<label style="padding-right: 3.25rem;"><input type="checkbox" />Dominonce</label>
+							</div>
+							<div class="checkbox">
+								<label style="padding-right: 3.25rem;"><input type="checkbox" />E-Colior</label>
+							</div>
+						</div>
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								TRAINFG STYLE
+							</h3>
+						</div>
+						<div class="panel-body">
+							<div class="checkbox">
+								<label style="padding-right: 3.25rem;"><input type="checkbox" checked="checked" />Obedience</label>
+								<label style="padding-right: 3.25rem;"><input type="checkbox" checked="checked" />Agility</label>
+							</div>
+							<div class="checkbox">
+								<label style="padding-right: 3.25rem;"><input type="checkbox" />Behvioral</label>
+								<label style="padding-right: 3.25rem;"><input type="checkbox" />Service</label>
+							</div>
+							<div class="checkbox">
+								<label style="padding-right: 3.25rem;"><input type="checkbox" />Tracking</label>
+								<label style="padding-right: 3.25rem;"><input type="checkbox" />Protection</label>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="col-md-10 column">
+					<div class="row" style="padding-bottom: 1.25rem;">
+						<div class="col-md-2">
+							<select class="form-control">
+								<option>RATING DESC</option>
+								<option>PRICE DESC</option>
+								<option>DISTANCE DESC</option>
+							</select>
+						</div>
+						<div class="col-md-1">
+						</div>
+						<div class="col-md-5">
+							<div class="btn-group">
+								<button type="button" class="btn btn-default">Pre</button>
+							    <button type="button" class="btn btn-default">1</button>
+								<button type="button" class="btn btn-default">2</button>
+								<button type="button" class="btn btn-default">3</button>
+								<button type="button" class="btn btn-default">4</button>
+								<button type="button" class="btn btn-default">5</button>
+								<button type="button" class="btn btn-default">6</button>
+								<button type="button" class="btn btn-default">7</button>
+								<button type="button" class="btn btn-default">8</button>
+								<button type="button" class="btn btn-default">9</button>
+								<button type="button" class="btn btn-default">Next</button>
+								<button type="button" class="btn btn-default">Go</button>
+								<input type="text" class="form-control" placeholder="to" style="width: 5rem; color: red;"/>
+								
+							 </div>
+						</div>
+						<div class="col-md-2">
+							<select class="form-control">
+								<option>4 Per Page</option>
+								<option>6 Per Page</option>
+								<option selected="selected">8 Per Page</option>
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-5">
+							<div class="media well">
+								<a href="#" class="pull-left"><img src="img/140x140.jpg" class="media-object img-thumbnail" alt='' style="width: 8.75rem;"/></a>
+								<div class="media-body">
+									<h4 class="media-heading"> Nested media heading </h4>
+									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras
+									purus odio, vestibulum in vulputate at, tempus viverra turpis.
+								</div>
+							</div>
+						</div>
+						<div class="col-md-5">
+							<div class="media well">
+								<a href="#" class="pull-left"><img src="img/140x140.jpg" class="media-object img-thumbnail" alt='' style="width: 8.75rem;"/></a>
+								<div class="media-body">
+									<h4 class="media-heading"> Nested media heading </h4>
+									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras
+									purus odio, vestibulum in vulputate at, tempus viverra turpis.
+								</div>
+							</div>
+						</div>
+						<div class="col-md-5">
+							<div class="media well">
+								<a href="#" class="pull-left"><img src="img/140x140.jpg" class="media-object img-thumbnail" alt='' style="width: 8.75rem;"/></a>
+								<div class="media-body">
+									<h4 class="media-heading"> Nested media heading </h4>
+									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras
+									purus odio, vestibulum in vulputate at, tempus viverra turpis.
+								</div>
+							</div>
+						</div>
+						<div class="col-md-5">
+							<div class="media well">
+								<a href="#" class="pull-left"><img src="img/140x140.jpg" class="media-object img-thumbnail" alt='' style="width: 8.75rem;"/></a>
+								<div class="media-body">
+									<h4 class="media-heading"> Nested media heading </h4>
+									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras
+									purus odio, vestibulum in vulputate at, tempus viverra turpis.
+								</div>
+							</div>
+						</div>
+						<div class="col-md-5">
+							<div class="media well">
+								<a href="#" class="pull-left"><img src="img/140x140.jpg" class="media-object img-thumbnail" alt='' style="width: 8.75rem;"/></a>
+								<div class="media-body">
+									<h4 class="media-heading"> Nested media heading </h4>
+									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras
+									purus odio, vestibulum in vulputate at, tempus viverra turpis.
+								</div>
+							</div>
+						</div>
+						<div class="col-md-5">
+							<div class="media well">
+								<a href="#" class="pull-left"><img src="img/140x140.jpg" class="media-object img-thumbnail" alt='' style="width: 8.75rem;"/></a>
+								<div class="media-body">
+									<h4 class="media-heading"> Nested media heading </h4>
+									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras
+									purus odio, vestibulum in vulputate at, tempus viverra turpis.
+								</div>
+							</div>
+						</div>
+						<div class="col-md-5">
+							<div class="media well">
+								<a href="#" class="pull-left"><img src="img/140x140.jpg" class="media-object img-thumbnail" alt='' style="width: 8.75rem;"/></a>
+								<div class="media-body">
+									<h4 class="media-heading"> Nested media heading </h4>
+									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras
+									purus odio, vestibulum in vulputate at, tempus viverra turpis.
+								</div>
+							</div>
+						</div>
+						<div class="col-md-5">
+							<div class="media well">
+								<a href="#" class="pull-left"><img src="img/140x140.jpg" class="media-object img-thumbnail" alt='' style="width: 8.75rem;"/></a>
+								<div class="media-body">
+									<h4 class="media-heading"> Nested media heading </h4>
+									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras
+									purus odio, vestibulum in vulputate at, tempus viverra turpis.
+									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras
+									purus odio, vestibulum in vulputate at, tempus viverra turpis.Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras
+									purus odio, vestibulum in vulputate at, tempus viverra turpis.
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+</html>
