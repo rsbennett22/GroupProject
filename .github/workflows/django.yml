@@ -25,8 +25,6 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install pillow
-        pip install django-resized
     - name: Run Tests
       run: |
         cd GroupProject
