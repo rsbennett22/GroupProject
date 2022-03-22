@@ -2,6 +2,8 @@
 *.pyc
 *~
 __pycache__
+db.sqlite3
+_settings_/
 
 # Env
 .env
