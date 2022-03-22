@@ -1,5 +1,5 @@
 from django.shortcuts import render
 
 # Create your views here.
-def dogWalkersPage(request):
+def dogWalkers(request):
 	return render(request, 'dogWalkers/dogWalkersPage.html', {})
