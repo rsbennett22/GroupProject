@@ -1,8 +1,9 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
-	path('', views.home, name='home'),
-	path('dogWalkers', views.dogWalkers, name="dogWalkers"),
-	path('dogTrainers', views.dogTrainers, name="dogTrainers"),
+	path('', views.dogWalkers, name='dogWalkers'),
+	#path('..\..\..\homepage\home.html', views.dogWalkers, name='home'),
+	#path('..\..\..\dogTrainers\index.html', views.dogWalkers, name='dogTrainers'),
+	path('home/', views.home, name='home'),
 ]
