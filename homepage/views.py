@@ -6,3 +6,6 @@ def home(request):
 	
 def dogWalkers(request):
 	return render(request, 'dogWalkers/dogWalkersPage.html', {})
+
+def dogTrainers(request):
+	return render(request, 'dogTrainers/index.html', {})
