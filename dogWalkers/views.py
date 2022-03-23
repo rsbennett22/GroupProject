@@ -1,8 +1,11 @@
 from django.shortcuts import render
+from .models import DogWalker
 
 # Create your views here.
 def dogWalkers(request):
-	return render(request, 'dogWalkers/dogWalkersPage.html', {})
+	#initialy order the users by their price
+	walkers = DogWalker.objects.order_by('price')
+	return render(request, 'dogWalkers/dogWalkersPage.html', {'walkers':walkers})
 	
 def home(request):
 	return render(request, 'homepage/home.html', {})

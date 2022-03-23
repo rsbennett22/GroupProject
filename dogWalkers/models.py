@@ -6,7 +6,7 @@ from django.conf import settings
 
 class DogWalker(models.Model):
 	name = models.CharField(max_length = 100)
-	usr_img = ResizedImageField(size=[500,500], upload_to = 'usrImgs/')
+	usr_img = ResizedImageField(size=[500,500], upload_to = "usrImgs")
 	email = models.EmailField(max_length = 100)
 	postcode = models.CharField(max_length = 8)
 	price = models.IntegerField()
