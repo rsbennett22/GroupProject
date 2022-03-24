@@ -9,3 +9,6 @@ def dogWalkers(request):
 	
 def home(request):
 	return render(request, 'homepage/home.html', {})
+	
+def dogTrainers(request):
+	return render(request, 'dogTrainers/dogTrainers.html', {})
