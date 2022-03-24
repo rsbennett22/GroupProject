@@ -107,7 +107,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'defaultdb', 
         'USER': 'doadmin', 
-        'PASSWORD': ' b6ihz3Nw1jd9hXMd',
+        'PASSWORD': 'b6ihz3Nw1jd9hXMd',
         'HOST': 'app-a4c146a7-b189-451f-aa3e-4df146882a10-do-user-11168172-0.b.db.ondigitalocean.com', 
         'PORT': '25060',
         'OPTIONS': {'sslmode': 'require'},
