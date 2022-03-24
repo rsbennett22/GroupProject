@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path(r'', include('homepage.urls'), name='home'),
     path(r'dogWalkers/', include('dogWalkers.urls'), name='dogWalkers'),
+    path(r'dogTrainers/', include('dogWalkers.urls'), name='dogTrainers'),
     path('api/v1/', include('api.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
