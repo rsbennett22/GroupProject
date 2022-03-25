@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'dogWalkers',
     'dogTrainers',
     'vetHelp',
+    'gdpr',
     
 ]
 
