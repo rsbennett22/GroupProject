@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+	{% load static %}
 	<head>
 	<meta charset="utf-8">
 	<title>Home</title>
@@ -12,6 +13,7 @@
 		 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.css"
 		 integrity="sha512-SZgE3m1he0aEF3tIxxnz/3mXu/u/wlMNxQSnE0Cni9j/O8Gs+TjM9tm1NX34nRQ7GiLwUEzwuE3Wv2FLz2667w=="
 		 crossorigin="anonymous" referrerpolicy="no-referrer" />
+		 <link rel="stylesheet" href="{% static 'css/popup.css' %}">
 	</head>
 
 	<body>
@@ -38,5 +40,18 @@
 				</form>
 			</div>
 		</nav>
+		 <div id="boxes">
+		<div style="top: 50%; left: 50%; display: none;" id="dialog" class="window"> 
+		<div id="san">
+		<p>Read and accept our privacy policy to continue</p>
+		<a href="#" class = "agree"><img src="{% static '/imgs/dcln.png' %}" width="80" height="30" style="float:left;"></a>
+		<a href="/gdpr" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+		<a href="#" class="close agree"><img src="{% static '/imgs/acpt.png' %}" width="80" height="30" style="float:center;"></a>
+		</div>
+		</div>
+		<div style="width: 2478px; font-size: 32pt; color:white; height: 1202px; display: none; opacity: 0.4;" id="mask"></div>
+		</div>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script> 
+		<script src="{% static '/js/popup.js' %}"></script>
 	</body>
 </html>

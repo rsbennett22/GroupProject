@@ -4,7 +4,7 @@ from .models import DogWalker
 # Create your views here.
 def dogWalkers(request):
 	#initialy order the users by their price
-	walkers = DogWalker.objects.order_by('price')
+	walkers = DogWalker.objects.filter(name = 'Rafe')
 	return render(request, 'dogWalkers/dogWalkersPage.html', {'walkers':walkers})
 	
 def home(request):
