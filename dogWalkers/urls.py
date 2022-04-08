@@ -1,8 +1,8 @@
-from django.urls import path, include
+from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-	path('', views.dogWalkers, name='dogWalkers'),
-	path('home/', views.home, name='home'),
-	path('dogTrainers/', views.dogTrainers, name='dogTrainers'),
+	url(r'^dogWalkers$', views.dogWalkers_list),
+	url(r'^dogWalkers/([0-9])$', views.dogWalkers_detail),
+	url(r'^dogWalkers/acpt_pup$', views.dogWalkers_acpt_pup),
 ]
