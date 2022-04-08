@@ -6,4 +6,4 @@ Assignment during our second year of university where we have to make an applica
 
 This project is currently underway!
 
-<b><a href="https://dogs4all-9j2r6.ondigitalocean.app/">Site link</b>
+<b><a href="https://dogs4all-gmgmv.ondigitalocean.app/">Site link</b>
