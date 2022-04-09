@@ -5,7 +5,8 @@ __pycache__
 db.sqlite3
 
 # Frontend
-
+node_modules/
+dogs4all-fe/README.md
 
 # Env
 .env
