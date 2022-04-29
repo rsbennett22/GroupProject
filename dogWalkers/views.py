@@ -10,6 +10,7 @@ from django.conf import settings
 from django.http import HttpResponse
 import logging
 import os
+# import checkPrice from DogWalker.js
 
 @api_view(['GET', 'POST', 'DELETE'])
 def dogWalkers_list(request):
@@ -67,4 +68,103 @@ def dogWalkers_acpt_pup(request):
 	#get a dogWalkers that accept puppies
 	if request.method == 'GET':
 		dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
+		return JsonResponse(dogWalker_serializer.data, safe=False) 
+
+
+@api_view(['GET'])
+def dogWalkers_avbl_morn(request):
+	dogWalkers = DogWalker.objects.filter(avbl_morn=True) 
+
+	#get a dogWalkers that accept morning walks
+	if request.method == 'GET':
+		dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
 		return JsonResponse(dogWalker_serializer.data, safe=False)
+
+@api_view(['GET'])
+def dogWalkers_avbl_morn(request):
+	dogWalkers = DogWalker.objects.filter(avbl_morn=True) 
+
+	#get a dogWalkers that accept morning walks
+	if request.method == 'GET':
+		dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
+		return JsonResponse(dogWalker_serializer.data, safe=False)
+
+@api_view(['GET'])
+def dogWalkers_avbl_aftn(request):
+	dogWalkers = DogWalker.objects.filter(avbl_aftn=True) 
+
+	#get a dogWalkers that accept afternoon walks
+	if request.method == 'GET':
+		dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
+		return JsonResponse(dogWalker_serializer.data, safe=False)
+
+@api_view(['GET'])
+def dogWalkers_avbl_eve(request):
+	dogWalkers = DogWalker.objects.filter(avbl_eve=True) 
+
+	#get a dogWalkers that accept evening walks
+	if request.method == 'GET':
+		dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
+		return JsonResponse(dogWalker_serializer.data, safe=False)
+
+@api_view(['GET'])
+def dogWalkers_acpt_7k(request):
+	dogWalkers = DogWalker.objects.filter(acpt_7k=True) 
+
+	#get a dogWalkers that accept dogs below 7kg 
+	if request.method == 'GET':
+		dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
+		return JsonResponse(dogWalker_serializer.data, safe=False)
+
+@api_view(['GET'])
+def dogWalkers_acpt_18k(request):
+	dogWalkers = DogWalker.objects.filter(acpt_18k=True) 
+
+	#get a dogWalkers that accept dogs below 18kg
+	if request.method == 'GET':
+		dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
+		return JsonResponse(dogWalker_serializer.data, safe=False)
+
+@api_view(['GET'])
+def dogWalkers_acpt_45k(request):
+	dogWalkers = DogWalker.objects.filter(acpt_45k=True) 
+
+	#get a dogWalkers that accept accept dogs below 45kg
+	if request.method == 'GET':
+		dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
+		return JsonResponse(dogWalker_serializer.data, safe=False)
+
+@api_view(['GET'])
+def dogWalkers_acpt_abv_45k(request):
+	dogWalkers = DogWalker.objects.filter(acpt_abv_45k=True) 
+
+	#get a dogWalkers that accept dogs above 45k 
+	if request.method == 'GET':
+		dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
+		return JsonResponse(dogWalker_serializer.data, safe=False)
+
+@api_view(['GET'])
+def dogWalkers_price(request):
+    if request.method == "GET":
+        dogWalkers=DogWalker.objects.all()
+        value = request.query_params.get('price', None)
+        if value is not None:
+            dogWalkers=dogWalkers.filter(price__lte=value)
+        dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
+        return JsonResponse(dogWalker_serializer.data, safe=False)
+
+
+@api_view(['GET'])
+def dogWalkers_rating(request):
+    if request.method == "GET":
+        dogWalkers=DogWalker.objects.all()
+        value = request.query_params.get('price', None)
+        if value is not None:
+            dogWalkers=dogWalkers.filter(price__lte=value)
+        dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
+        return JsonResponse(dogWalker_serializer.data, safe=False)
+
+
+
+
+
