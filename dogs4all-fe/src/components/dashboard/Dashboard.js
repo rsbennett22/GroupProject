@@ -6,7 +6,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (localStorage.getItem('token') === null) {
-      window.location.replace('http://127.0.0.1:8000/login');
+      window.location.replace('/login');
     } else {
       fetch('http://127.0.0.1:8000/api/users/auth/user/', {
         method: 'GET',

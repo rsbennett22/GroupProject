@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState(false);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (localStorage.getItem('token') !== null) {
-      window.location.replace('http://127.0.0.1:8000/dashboard');
+      //navigate('/dashboard');
+      window.location.replace('/dashboard');
     } else {
       setLoading(false);
     }
@@ -34,7 +37,8 @@ const Login = () => {
         if (data.key) {
           localStorage.clear();
           localStorage.setItem('token', data.key);
-          window.location.replace('http://127.0.0.1:8000/dashboard');
+          window.location.replace('/dashboard');
+          //navigate('/dashboard');
         } else {
           setEmail('');
           setPassword('');
