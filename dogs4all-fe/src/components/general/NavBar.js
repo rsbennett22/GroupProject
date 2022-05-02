@@ -22,6 +22,11 @@ function Navigation() {
 									Dog Walkers
 								</NavLink>
 							</li>
+							<li className="nav-link">
+								<NavLink className="nav-link" to="/dogTraining">
+									Dog Training
+								</NavLink>
+							</li>
 						</ul>
 					</div>
 				</div>

@@ -1,23 +1,23 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import './DogWalkers.css';
+import './DogTraining.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css'
 import {Slider, Input} from '@material-ui/core'
 
 
 
-const DogWalkers = () => {
-  const [dogWalkers, setDogWalkers] = useState([]);
+const DogTraining = () => {
+  const [dogTraining, setDogTraining] = useState([]);
   useEffect(() => {
-    getDogWalkers();
+    getDogTraining();
   }, []);
   
-  const getDogWalkers = () => {
-    axios.get('/api/dogWalkers')
+  const getDogTraining = () => {
+    axios.get('/api/dogTraining')
     .then((res) => {
       console.log(res);
-      setDogWalkers(res.data);
+      setDogTraining(res.data);
     })
     .catch((err) => {
       console.log(err);
@@ -25,14 +25,14 @@ const DogWalkers = () => {
   };
 
 
-  const acptPuppy = () => {
-    var isChecked = document.getElementById("acpt_pup");
+  const acptTrainer = () => {
+    var isChecked = document.getElementById("acpt_Trainer");
     if(isChecked.checked)
     {
-        axios.get('/api/dogWalkers/acpt_pup')
+        axios.get('/api/dogTraining/acpt_Trainer')
       .then((res) => {
         console.log(res);
-        setDogWalkers(res.data);      
+        setDogTraining(res.data);      
       })
       .catch((err) => {
         console.log(err);
@@ -40,64 +40,7 @@ const DogWalkers = () => {
     }
     else
     {
-        getDogWalkers();
-    }
-  };
-
-  const avblMorn = () => {
-    var isChecked = document.getElementById("avbl_morn");
-    if(isChecked.checked)
-    {
-        axios.get('/api/dogWalkers/avbl_morn')
-      .then((res) => {
-        console.log(res);
-        setDogWalkers(res.data);      
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    }
-    else
-    {
-        getDogWalkers();
-    }
-  };
-
-  const avblAftn = () => {
-    var isChecked = document.getElementById("avbl_aftn");
-    if(isChecked.checked)
-    {
-        axios.get('/api/dogWalkers/avbl_aftn')
-      .then((res) => {
-        console.log(res);
-        setDogWalkers(res.data);      
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    }
-    else
-    {
-        getDogWalkers();
-    }
-  };
-
-  const avblEve = () => {
-    var isChecked = document.getElementById("avbl_eve");
-    if(isChecked.checked)
-    {
-        axios.get('/api/dogWalkers/avbl_eve')
-      .then((res) => {
-        console.log(res);
-        setDogWalkers(res.data);      
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    }
-    else
-    {
-        getDogWalkers();
+        getDogTraining();
     }
   };
 
@@ -105,7 +48,7 @@ const DogWalkers = () => {
     var isChecked = document.getElementById("acpt_7k");
     if(isChecked.checked)
     {
-        axios.get('/api/dogWalkers/acpt_7k')
+        axios.get('/api/dogTraining/acpt_7k')
       .then((res) => {
         console.log(res);
         setDogWalkers(res.data);      
@@ -116,7 +59,7 @@ const DogWalkers = () => {
     }
     else
     {
-        getDogWalkers();
+        getDogTraining();
     }
   };
 
@@ -124,7 +67,7 @@ const DogWalkers = () => {
     var isChecked = document.getElementById("acpt_18k");
     if(isChecked.checked)
     {
-        axios.get('/api/dogWalkers/acpt_18k')
+        axios.get('/api/dogTraining/acpt_18k')
       .then((res) => {
         console.log(res);
         setDogWalkers(res.data);      
@@ -135,7 +78,7 @@ const DogWalkers = () => {
     }
     else
     {
-        getDogWalkers();
+        getDogTraining();
     }
   };
 
@@ -144,10 +87,10 @@ const DogWalkers = () => {
     console.log(isChecked);
     if(isChecked.checked)
     {
-        axios.get('/api/dogWalkers/acpt_45k')
+        axios.get('/api/dogTraining/acpt_45k')
       .then((res) => {
         console.log(res);
-        setDogWalkers(res.data);      
+        setDogTraining(res.data);      
       })
       .catch((err) => {
         console.log(err);
@@ -155,7 +98,7 @@ const DogWalkers = () => {
     }
     else
     {
-        getDogWalkers();
+        getDogTraining();
     }
   };
 
@@ -163,10 +106,10 @@ const DogWalkers = () => {
     var isChecked = document.getElementById("acpt_abv_45k");
     if(isChecked.checked)
     {
-        axios.get('/api/dogWalkers/acpt_abv_45k')
+        axios.get('/api/dogTraining/acpt_abv_45k')
       .then((res) => {
         console.log(res);
-        setDogWalkers(res.data);      
+        setDogTraining(res.data);      
       })
       .catch((err) => {
         console.log(err);
@@ -174,7 +117,7 @@ const DogWalkers = () => {
     }
     else
     {
-        getDogWalkers();
+        getDogTraining();
     }
   };
 
@@ -186,10 +129,10 @@ const [value, setValue] = useState(15)
 const handleChange = (event, value) => {
   setValue(value);
   console.log(value);
-  axios.get('/api/dogWalkers/price?price='+ value)                                                                     
+  axios.get('/api/dogTraining/price?price='+ value)                                                                     
   .then((res) => {                                                        
     console.log(res);                                         
-     setDogWalkers(res.data);      
+     setDogTraining(res.data);      
    })
   .catch((err) => {
      console.log(err);
@@ -227,26 +170,12 @@ const handleChange = (event, value) => {
     //side bar
     <div>
       <div className="sidebar">
-        <h5>Find your dog walker!</h5>
+        <h5>Find your dog Trainer!</h5>
         <hr></hr>
-        <input type="checkbox" id="acpt_pup" onClick={() => acptPuppy()}/>
-        <label for="acpt_pup">Is your dog a puppy?</label>
-        <hr></hr>
+        <input type="checkbox" id="acpt_Trainer" onClick={() => acptPuppy()}/>
+        <label for="acpt_Trainer">Choosing the right trainer for your dog</label>
 
-        <h6>Available times</h6>
-        <input type="checkbox" id="avbl_morn" onClick={() => avblMorn()}/>
-        <label for="avbl_morn">6am-11am</label>
-        <hr></hr>
-
-        <input type="checkbox" id="avbl_aftn" onClick={() => avblAftn()}/>
-        <label for="avbl_aftn">11am-3pm</label>
-        <hr></hr>
-
-        <input type="checkbox" id="avbl_eve" onClick={() => avblEve()}/>
-        <label for="avbl_eve">3pm-10pm</label>
-        <hr></hr>
-
-        <h6>Size of dogs walkers will accept</h6>
+        <h6>Size of dogs trainer will accept</h6>
         <input type="checkbox" id="acpt_7k" onClick={() => acpt_7k()}/>
         <label for="acpt_7k"> Less than 7kg</label>
         <hr></hr>
@@ -278,18 +207,18 @@ const handleChange = (event, value) => {
         minDate={new Date()} isClearable selectsRange inline/>
       </div>
 
-      <div className="dogWalkers">
-        <h1>Dog Walkers</h1>
+      <div className="dogTraining">
+        <h1>Dog Training</h1>
         <div>
-        {dogWalkers.map((dogWalker) => (
-          <div className="walker" key={dogWalker.id}>
+        {dogTraining.map((dogTrainer) => (
+          <div className="trainer" key={dogTrainer.id}>
             <hr></hr>
-            {<h4>{dogWalker.name}</h4>/*//would add more data using a similar command */}
-            <p>{dogWalker.usr_info}</p> 
+            {<h4>{dogTrainer.name}</h4>/*//would add more data using a similar command */}
+            <p>{dogTrainer.usr_info}</p> 
             <h6>Price:</h6>
-            <p>{dogWalker.price}</p>
+            <p>{dogTrainer.price}</p>
             <h6>Rating:</h6>
-            <p>{dogWalker.rating}</p>
+            <p>{dogTrainer.rating}</p>
           </div>
           ))}
         </div>
@@ -298,4 +227,4 @@ const handleChange = (event, value) => {
     );    
 };
 
-export default DogWalkers;
+export default DogTraining;
