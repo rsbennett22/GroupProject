@@ -1,7 +1,7 @@
 from django.db import models
 from django_resized import ResizedImageField
 
-class Dogtraining(models.Model):
+class DogTraining(models.Model):
 	name = models.CharField(max_length = 100)
 	usr_img = ResizedImageField(size=[500,500], upload_to = "usrImgs")
 	email = models.EmailField(max_length = 100)
@@ -17,5 +17,6 @@ class Dogtraining(models.Model):
 	acpt_abv_45k = models.BooleanField()
 	dogTraining_info = models.TextField()
 	acpt_Trainer = models.BooleanField()
+	acpt_style = models.TextField()
 	def __str__(self):
 		return self.name
