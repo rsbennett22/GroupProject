@@ -11,6 +11,7 @@ urlpatterns = [
 	url(r'^dogTraining/acpt_45k$', views.dogTraining_acpt_45k),
 	url(r'^dogTraining/acpt_abv_45k$', views.dogTraining_acpt_abv_45k),
 	url(r'^dogTraining/price$', views.dogTraining_price, name='price'),
+	url(r'^dogTraining/acpt_style$', views.dogTraining_acpt_style),
 
 
 ]
