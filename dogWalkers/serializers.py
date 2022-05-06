@@ -4,4 +4,4 @@ from .models import DogWalker
 class DogWalkerSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = DogWalker
-		fields = ('name', 'email', 'postcode', 'price', 'rating', 'usr_info', 'avbl_from', 'avbl_to', 'avbl_morn', 'avbl_aftn', 'avbl_eve', 'acpt_7k', 'acpt_18k', 'acpt_45k', 'acpt_abv_45k', 'acpt_pup')
+		fields = ('name', 'email', 'postcode', 'price', 'rating', 'usr_info', 'avbl_from', 'avbl_to', 'has_avbl', 'min_wt', 'max_wt', 'acpt_pup')

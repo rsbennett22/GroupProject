@@ -10,6 +10,13 @@ from django.conf import settings
 from django.http import HttpResponse
 import logging
 import os
+from django.db.models import Q
+
+
+startDate = None
+endDate = None
+weight = None
+price = None
 
 @api_view(['GET', 'POST', 'DELETE'])
 def dogWalkers_list(request):
@@ -71,100 +78,115 @@ def dogWalkers_acpt_pup(request):
 
 
 @api_view(['GET'])
-def dogWalkers_avbl_morn(request):
-    dogWalkers = DogWalker.objects.filter(avbl_morn=True) 
+def dogWalkers_has_avbl(request):
+    dogWalkers = DogWalker.objects.filter(has_avbl=True) 
 
     #get a dogWalkers that accept morning walks
     if request.method == 'GET':
         dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
         return JsonResponse(dogWalker_serializer.data, safe=False)
 
-@api_view(['GET'])
-def dogWalkers_avbl_morn(request):
-    dogWalkers = DogWalker.objects.filter(avbl_morn=True) 
 
-    #get a dogWalkers that accept morning walks
-    if request.method == 'GET':
-        dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
-        return JsonResponse(dogWalker_serializer.data, safe=False)
 
-@api_view(['GET'])
-def dogWalkers_avbl_aftn(request):
-    dogWalkers = DogWalker.objects.filter(avbl_aftn=True) 
-
-    #get a dogWalkers that accept afternoon walks
-    if request.method == 'GET':
-        dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
-        return JsonResponse(dogWalker_serializer.data, safe=False)
+startDate = None
+endDate = None
+weight = None
+price = None
+avail = None
+pup = None
 
 @api_view(['GET'])
-def dogWalkers_avbl_eve(request):
-    dogWalkers = DogWalker.objects.filter(avbl_eve=True) 
-
-    #get a dogWalkers that accept evening walks
-    if request.method == 'GET':
-        dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
-        return JsonResponse(dogWalker_serializer.data, safe=False)
-
-@api_view(['GET'])
-def dogWalkers_acpt_7k(request):
-    dogWalkers = DogWalker.objects.filter(acpt_7k=True) 
-
-    #get a dogWalkers that accept dogs below 7kg 
-    if request.method == 'GET':
-        dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
-        return JsonResponse(dogWalker_serializer.data, safe=False)
-
-@api_view(['GET'])
-def dogWalkers_acpt_18k(request):
-    dogWalkers = DogWalker.objects.filter(acpt_18k=True) 
-
-    #get a dogWalkers that accept dogs below 18kg
-    if request.method == 'GET':
-        dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
-        return JsonResponse(dogWalker_serializer.data, safe=False)
-
-@api_view(['GET'])
-def dogWalkers_acpt_45k(request):
-    dogWalkers = DogWalker.objects.filter(acpt_45k=True) 
-
-    #get a dogWalkers that accept accept dogs below 45kg
-    if request.method == 'GET':
-        dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
-        return JsonResponse(dogWalker_serializer.data, safe=False)
-
-@api_view(['GET'])
-def dogWalkers_acpt_abv_45k(request):
-    dogWalkers = DogWalker.objects.filter(acpt_abv_45k=True) 
-
-    #get a dogWalkers that accept dogs above 45k 
-    if request.method == 'GET':
-        dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
-        return JsonResponse(dogWalker_serializer.data, safe=False)
-
-
-
-@api_view(['GET'])
-def dogWalkers_price(request):
-    if request.method == "GET":
-        dogWalkers=DogWalker.objects.all()
-        value = request.query_params.get('price', None)
-        if value is not None:
-            dogWalkers=dogWalkers.filter(price__lte=value)
-        dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
-        return JsonResponse(dogWalker_serializer.data, safe=False)
-    #This method gets the slider value from the url (line 152) and then uses this in the filtering logic
-
-
-
-@api_view(['GET'])
-def dogWalkers_date_range(request):
-    if request.method == "GET":
-        dogWalkers=DogWalker.objects.all()
-        startDate = request.query_params.get('avbl_from', None)
-        endDate = request.query_params.get('avbl_to', None)
-        if startDate and endDate is not None:
-            dogWalkers=(dogWalkers.filter(avbl_from__gte=startDate, avbl_from__lte=endDate))or (dogWalkers.filter(avbl_to__gte=startDate, avbl_to__lte=endDate))or (dogWalkers.filter(avbl_from__lte=startDate, avbl_to__gte=endDate)) 
-        dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
-        return JsonResponse(dogWalker_serializer.data, safe=False)
-    #This method gets the start and end date selected from the datepicker from the url (line 165,166) and then uses this in the filtering logic
+def dogWalkers_filter(request):
+	if request.method == "GET":
+		global startDate
+		global endDate
+		global weight
+		global price
+		global avail
+		global pup
+		dogWalkers=DogWalker.objects.all()
+		startDateCheck = request.query_params.get('avbl_from', None)
+		endDateCheck = request.query_params.get('avbl_to', None)
+		weightCheck = request.query_params.get('weight', None)
+		priceCheck = request.query_params.get('price', None)
+		availCheck = request.query_params.get('avail', None)
+		pupCheck = request.query_params.get('pup', None)
+		if priceCheck is not None:
+			price = priceCheck
+		if startDateCheck is not None:
+			startDate = startDateCheck
+		if endDateCheck is not None:
+			endDate = endDateCheck
+		if weightCheck is not None:
+			weight = weightCheck
+		if availCheck is not None:
+			avail = availCheck
+		if pupCheck is not None:
+			pup = pupCheck
+		cri1 = Q(min_wt__lte=weight)
+		cri2 = Q(max_wt__gte=weight)
+		cri3 = Q(price__lte=price)
+		cri4 = Q(avbl_from__gte=startDate)
+		cri5 = Q(avbl_from__lte=endDate)
+		cri6 = Q(avbl_to__gte=startDate)
+		cri7 = Q(avbl_to__lte=endDate)
+		cri8 = Q(avbl_from__lte=startDate)
+		cri9 = Q(avbl_to__gte=endDate)
+		print(price)
+		print(weight)
+		print(startDate)
+		print(endDate)
+		print (avail)
+		print(pup)
+		if avail is None:
+			print("entered incorrect None if")
+			if weight and startDate and endDate and price is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri3 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			if weight and price is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri3)
+			if weight is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2)
+			if price is not None:
+				dogWalkers=dogWalkers.filter(cri3)
+			if startDate and endDate and price is not None:
+				dogWalkers=dogWalkers.filter(cri3 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			if startDate and endDate is not None:
+				dogWalkers=dogWalkers.filter(((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			if startDate and endDate and weight is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+				#Need to add case where both checkboxes are ticked possibly, I'm not quite sure 
+		if avail == 'false':
+			print("entered availability statement")
+			if weight and startDate and endDate and price is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri3 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			if weight and price is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri3)
+			if weight is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2)
+			if price is not None:
+				dogWalkers=dogWalkers.filter(cri3)
+			if startDate and endDate and price is not None:
+				dogWalkers=dogWalkers.filter(cri3 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			if startDate and endDate is not None:
+				dogWalkers=dogWalkers.filter(((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			if startDate and endDate and weight is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+		if pup == 'false':
+			print("entered accept_pup statement")
+			if weight and startDate and endDate and price is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri3 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			if weight and price is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri3)
+			if weight is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2)
+			if price is not None:
+				dogWalkers=dogWalkers.filter(cri3)
+			if startDate and endDate and price is not None:
+				dogWalkers=dogWalkers.filter(cri3 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			if startDate and endDate is not None:
+				dogWalkers=dogWalkers.filter(((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			if startDate and endDate and weight is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+		dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
+		return JsonResponse(dogWalker_serializer.data, safe=False)
+ 
