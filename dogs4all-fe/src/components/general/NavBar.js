@@ -1,6 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import logo from './logo.png';
+import profileIcon from './profileIcon.png';
+import './general.css';
 
 const NavBar = () => {
 	const [isAuth, setIsAuth] = useState(false);
@@ -31,14 +33,9 @@ const NavBar = () => {
 											Dog Walkers
 										</NavLink>
 									</li>
-									<li className="nav-link">
+									<li id="dashboard" className="nav-link">
 										<NavLink className="nav-link" to="/dashboard">
-											Dashboard
-										</NavLink>
-									</li>
-									<li className="nav-link">
-										<NavLink className="nav-link" to="/logout">
-											Logout
+											My Account
 										</NavLink>
 									</li>
 								</ul>
@@ -63,7 +60,7 @@ const NavBar = () => {
 											Dog Walkers
 										</NavLink>
 									</li>
-									<li className="nav-link">
+									<li id="dashboard" className="nav-link">
 										<NavLink className="nav-link" to="/login">
 											Login
 										</NavLink>

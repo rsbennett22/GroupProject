@@ -1,4 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
+import SideBar from './../SideBar';
+import './../Dashboard.css';
 
 const Logout = () => {
   const [loading, setLoading] = useState(true);
@@ -31,12 +33,18 @@ const Logout = () => {
 
   return (
     <div>
-      {loading === false && (
-        <Fragment>
-          <h1>Are you sure you want to logout?</h1>
-          <input type='button' value='Logout' onClick={handleLogout} />
-        </Fragment>
-      )}
+    <SideBar />
+      <div className="dashboard">
+        {loading === false && (
+          <Fragment>
+            <h1>Logout</h1>
+            <div className="body">
+              <p>Are you sure you want to logout?</p>
+              <input className="logout" type='button' value='Logout' onClick={handleLogout} />
+            </div>
+          </Fragment>
+        )}
+      </div>
     </div>
   );
 };

@@ -50,7 +50,7 @@ const DogWalkers = () => {
         {dogWalkers.map((dogWalker) => (
           <div className="walker" key={dogWalker.id}>
             <h4>{dogWalker.name}</h4>
-            <p>{dogWalker.usr_info}</p>
+            <p>{dogWalker.pk}</p>
           </div>
           ))}
         </div>

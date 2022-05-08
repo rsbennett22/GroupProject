@@ -7,31 +7,47 @@ import Footer from './components/general/Footer';
 //authentication pages
 import Login from './components/authentication/Login/Login';
 import Signup from './components/authentication/Signup/Signup';
-import Logout from './components/authentication/Logout/Logout';
 
 //page views
 import Home from './components/homepage/Home';
-import Dashboard from './components/dashboard/Dashboard';
 import DogWalkers from './components/dogWalkers/DogWalkers';
+import PageNotFound from './components/general/PageNotFound';
+
+//Dashboard views
+import Dashboard from './components/dashboard/Dashboard';
+import Logout from './components/dashboard/Logout/Logout';
+import Me from './components/dashboard/Me/Me';
+import DogWalkerCreateProfile from './components/dashboard/DogWalkerProfile/DogWalkerCreateProfile';
+import DogWalkerEditProfile from './components/dashboard/DogWalkerProfile/DogWalkerEditProfile';
+import DogWalkerDeleteProfile from './components/dashboard/DogWalkerProfile/DogWalkerDeleteProfile';
 
 
 const App = () => {
   return (
     <div className='App'>
       <Router>
-        <NavBar />
+      <NavBar />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/dogWalkers' element={<DogWalkers />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
-          <Route path='/logout' element={<Logout />} />
           <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/me' element={<Me />} />
+          <Route path='/dogWalkerCreateProfile' element={<DogWalkerCreateProfile />} />
+          <Route path='/dogWalkerEditProfile' element={<DogWalkerEditProfile />} />
+          <Route path='/dogWalkerDeleteProfile' element={<DogWalkerDeleteProfile />} />
+          <Route path='/logout' element={<Logout />} />
+          <Route path='*' element={<PageNotFound />} />
         </Routes>
-        <Footer />
       </Router>
+      <Footer />
     </div>
   );
 };
 
 export default App;
+
+//<Route path='/me' element={<Me />} />
+//<Route path='/dogWalkerProfile' element={<DogWalkerProfile />} />
+//<Route path='/dogTrainerProfile' element={<DogTrainerProfile />} />
