@@ -4,7 +4,7 @@ import SideBar from './../SideBar';
 import './../Dashboard.css';
 
 const DogWalkerEditProfile = () => {
-	const [createdProfile, setCreatedProfile] = useState(false);
+	const [createdProfile, setCreatedProfile] = useState(true);
 	const [username, setUserName] = useState('');
 	const [first_name, setUserFName] = useState('');
 	const [last_name, setUserLName] = useState('');
@@ -22,6 +22,38 @@ const DogWalkerEditProfile = () => {
   	const [isAvailable, setIsAvailable] = useState(false);
   	const [acptPup, setAcptPup] = useState(false);
   	const [profilePK, setProfilePK] = useState(-1);
+
+  	useEffect(() => {
+	    if (localStorage.getItem('token') === null) {
+	      window.location.replace('/login');
+	    } 
+	    else {
+	    	fetch('http://127.0.0.1:8000/api/users/auth/user/', {
+		        method: 'GET',
+		        headers: {
+		          'Content-Type': 'application/json',
+		          Authorization: `Token ${localStorage.getItem('token')}`
+		        }})
+	    		.then(res => res.json())
+			    .then(data => {
+			    	setCreatedProfile(data.createdDogWalkerProfile);
+			    	setEmail(data.email);
+					setUserName(data.username);
+        		});
+    		};
+	}, []);	
+
+  	useEffect(()=>{
+  		console.log("created: "+createdProfile);
+  		if(!createdProfile){
+  			window.location.replace('/dogWalkerCreateProfile');
+  		}
+  		else{
+	  		getProfileInfo();
+	  		setLoading(false);
+	  	}
+  	},[username])
+
 
   	const handleImageUpload = e => {
   		var imageDiv = document.getElementById('userImage').children;
@@ -117,35 +149,6 @@ const DogWalkerEditProfile = () => {
   		alert("Profile updated successfully!");
   		window.location.replace('/dashboard');
 	}  
-
-  	useEffect(() => {
-	    if (localStorage.getItem('token') === null) {
-	      window.location.replace('/login');
-	    } 
-	    else {
-	    	fetch('http://127.0.0.1:8000/api/users/auth/user/', {
-		        method: 'GET',
-		        headers: {
-		          'Content-Type': 'application/json',
-		          Authorization: `Token ${localStorage.getItem('token')}`
-		        }})
-	    		.then(res => res.json())
-			    .then(data => {
-					setUserName(data.username);
-					setCreatedProfile(data.createdDogWalkerProfile);
-        		});
-    		};
-	}, []);	
-
-  	useEffect(() => {
-  		if(!createdProfile){
-  			window.location.replace('/dogWalkerCreateProfile')
-  		}
-  		else{
-  			getProfileInfo();
-  			setLoading(false);
-  		}
-  	}, [username]);
 
 	const getProfileInfo = () => {
 		fetch('http://127.0.0.1:8000/api/dogWalkers/'+username, {

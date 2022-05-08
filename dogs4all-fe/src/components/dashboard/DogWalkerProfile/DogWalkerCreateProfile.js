@@ -4,6 +4,7 @@ import SideBar from './../SideBar';
 import './../Dashboard.css';
 
 const DogWalkerCreateProfile = () => {
+		const [createdProfile, setCreatedProfile] = useState(false);
 		const [username, setUserName] = useState('');
 		const [first_name, setUserFName] = useState('');
 		const [last_name, setUserLName] = useState('');
@@ -147,10 +148,20 @@ const DogWalkerCreateProfile = () => {
 					setEmail(data.email);
 					setUserName(data.username);
 					setUserFullName(data.first_name+" "+data.last_name);
-					setLoading(false);
+					setCreatedProfile(data.createdDogWalkerProfile);
          });
     	};
 	}, []);	
+
+  	useEffect(()=>{
+  		if(createdProfile)
+  		{
+  			window.location.replace('/dogWalkerEditProfile');
+  		}
+  		else{
+  			setLoading(false);
+  		}
+  	},[createdProfile])
 
 	return (
 	<div>

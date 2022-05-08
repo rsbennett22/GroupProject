@@ -30,6 +30,7 @@ const Me = () => {
       },
       body: JSON.stringify(user)
     });
+    alert("Successfully updated account details!");
     window.location.replace('/dashboard');
   }
 
@@ -65,6 +66,7 @@ const Me = () => {
             .then(data => {
               console.log(data);
               localStorage.clear();
+              alert("Successfully changed password!");
               window.location.replace('/login');
             });
           }

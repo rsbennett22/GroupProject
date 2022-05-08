@@ -37,6 +37,7 @@ const DogWalkerDeleteProfile = () => {
 	}, []);	
 
   	useEffect(()=>{
+  		console.log("created: "+createdProfile);
   		if(!createdProfile)
   		{
   			window.location.replace('/dogWalkerCreateProfile');
