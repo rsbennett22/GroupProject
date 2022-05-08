@@ -5,6 +5,7 @@ import './Dashboard.css';
 const Dashboard = () => {
   const [user_fname,setUserFName] = useState('');
   const [user_lname,setUserLName] = useState('');
+  const [createdProfile, setCreatedProfile] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -20,12 +21,17 @@ const Dashboard = () => {
       })
         .then(res => res.json())
         .then(data => {
+          setCreatedProfile(data.createdDogWalkerProfile);
           setUserFName(data.first_name);
           setUserLName(data.last_name);
-          setLoading(false);
         });
     }
   }, []);
+
+  useEffect(()=>{
+    setLoading(false);
+    console.log(createdProfile);
+  },[createdProfile])
 
   const loadAccountDetails = () => {
     console.log("clicked account details button");
@@ -42,14 +48,25 @@ const Dashboard = () => {
     <div>
       <SideBar />
       <div className="dashboard">
+      {loading === false}
         <h1>My Account</h1>
         <div id="body" className="body">
           <p>
             Hello <b>{user_fname} {user_lname}</b> (not <b>{user_fname} {user_lname}</b>? <a href="/logout">Log out</a>)
           </p>
-          <p>
-            From your account dashboard you can view your <a href="/dogWalkerProfile">Dog Walker Profile</a>, view your <a href="/dogTrainerProfile">Dog Trainer Profile</a> and <a href="/me">edit your account details</a>.
-          </p>
+          {createdProfile === false ? (
+            <Fragment>
+              <p>
+                From your account dashboard you can view your <a href="/dogWalkerCreateProfile">Dog Walker Profile</a>, view your <a href="/dogTrainerProfile">Dog Trainer Profile</a> and <a href="/me">edit your account details</a>.
+              </p>
+            </Fragment>
+            ):(
+            <Fragment>
+              <p>
+                From your account dashboard you can view your <a href="/dogWalkerEditProfile">Dog Walker Profile</a>, view your <a href="/dogTrainerProfile">Dog Trainer Profile</a> and <a href="/me">edit your account details</a>.
+              </p>
+            </Fragment>
+            )}
         </div>
       </div>
     </div>
