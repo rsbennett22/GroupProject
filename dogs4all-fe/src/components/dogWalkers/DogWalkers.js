@@ -30,9 +30,14 @@ const DogWalkers = () => {
   const acptPuppy = () => {
     var isChecked = document.getElementById("acpt_pup");
     if(isChecked.checked){
-    var avbl = [...dogWalkers].filter((a) => a.acpt_pup === true);
-    setDogWalkers(avbl)
-    console.log(avbl);
+      axios.get('/api/dogWalkers/filter?pup=' + true)
+      .then((res) => {
+        console.log(res);
+        setDogWalkers(res.data);      
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   else 
   {
@@ -50,9 +55,14 @@ const DogWalkers = () => {
   const hasAvbl = () => {
     var isChecked = document.getElementById("has_avbl");
     if(isChecked.checked){
-    var avbl = [...dogWalkers].filter((a) => a.has_avbl === true);
-    setDogWalkers(avbl)
-    console.log(avbl);
+      axios.get('/api/dogWalkers/filter?avail=' + true)
+      .then((res) => {
+        console.log(res);
+        setDogWalkers(res.data);      
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   else 
   {
@@ -66,7 +76,6 @@ const DogWalkers = () => {
       });
   }
   };
-
 
 
 //Price Slider filter hook and method
@@ -101,7 +110,6 @@ const DogWalkers = () => {
   }
 
 
-
   //used for the date picker 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
@@ -127,12 +135,26 @@ const DogWalkers = () => {
 
   //Method for 'reset filter' button
   const reset = () =>{
-    setStartDate(null);
-    setEndDate(null);
-    setValue(null);
-    setWeight(null);
+    axios.get('/api/dogWalkers/filter?avbl_from=' + null + '&avbl_to=' + null + '&weight=' + null + '&price=' + null + '&avail=' + null + '&pup=' + null + '&avail=' + null + '&pup=' + null)
     getDogWalkers();
+
   }
+
+//   const unCheck = () => {
+//     var i = 0
+//     var x = document.getElementById("acpt_pup");
+//     for(i=0; i<=x.length; i++) {
+//     x[i].checked = false;
+//     }   
+// }
+
+// const unCheck1 = () => {
+//   var i = 0
+//   var x = document.getElementById("has_avbl");
+//   for(i=0; i<=x.length; i++) {
+//   x[i].checked = false;
+//   }   
+// }
 
   
   //'sort by' buttons
@@ -153,7 +175,7 @@ const DogWalkers = () => {
   }
   
 
-  //Used to mark start, middle and end of slider
+  //Used to mark start, middle and end of price slider
   const mark=[
     {value: 0,
       label: "£0"},
@@ -163,6 +185,7 @@ const DogWalkers = () => {
       label: "£30"}
   ]
 
+  //Used to mark start, middle and end of weight slider
   const mark2=[
     {value: 0,
       label: "0"},
@@ -190,8 +213,6 @@ const DogWalkers = () => {
         <input type="checkbox" id="has_avbl" onClick={() => hasAvbl()}/>
         <label for="">Has availability?</label>
         <hr></hr>
-
-
   
         <h6>Weight of your dog:</h6>
         <div style={{width: 200, margin:60}}>
@@ -199,15 +220,13 @@ const DogWalkers = () => {
         valueLabelDisplay='auto' 
         onChangeCommitted={handleWeightChange} marks={mark2}
         />
-        
 
         <h6>Price range (£/hour):</h6>
         <div style={{width:160, margin:24}}>
         <Slider id = "slider" defaultValue = {null} max={30} step = {1} 
         valueLabelDisplay='auto' 
         onChangeCommitted={handleChange} marks={mark}
-        />
-        
+        />     
 
       </div>
       </div>

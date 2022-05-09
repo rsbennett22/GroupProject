@@ -11,6 +11,7 @@ from django.http import HttpResponse
 import logging
 import os
 from django.db.models import Q
+import json
 
 
 startDate = None
@@ -67,25 +68,6 @@ def dogWalkers_detail(request, pk):
         dogWalker.delete()
         return JsonResponse({'message': 'DogWalker successfully deleted!'}, status=status.HTTP_204_NO_CONTENT)
 
-@api_view(['GET'])
-def dogWalkers_acpt_pup(request):
-    dogWalkers = DogWalker.objects.filter(acpt_pup=True)
-
-    #get a dogWalkers that accept puppies
-    if request.method == 'GET':
-        dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
-        return JsonResponse(dogWalker_serializer.data, safe=False) 
-
-
-@api_view(['GET'])
-def dogWalkers_has_avbl(request):
-    dogWalkers = DogWalker.objects.filter(has_avbl=True) 
-
-    #get a dogWalkers that accept morning walks
-    if request.method == 'GET':
-        dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
-        return JsonResponse(dogWalker_serializer.data, safe=False)
-
 
 
 startDate = None
@@ -111,18 +93,27 @@ def dogWalkers_filter(request):
 		priceCheck = request.query_params.get('price', None)
 		availCheck = request.query_params.get('avail', None)
 		pupCheck = request.query_params.get('pup', None)
-		if priceCheck is not None:
-			price = priceCheck
-		if startDateCheck is not None:
-			startDate = startDateCheck
-		if endDateCheck is not None:
-			endDate = endDateCheck
-		if weightCheck is not None:
-			weight = weightCheck
-		if availCheck is not None:
-			avail = availCheck
-		if pupCheck is not None:
-			pup = pupCheck
+		if startDateCheck and endDateCheck and weightCheck and priceCheck and availCheck and pupCheck == 'null':  #This check is done when the 'reset filters' button is pressed 
+			price = None
+			startDate = None
+			endDate = None
+			weight = None
+			avail = None
+			pup = None
+		else:  #The if statements below are used so the global variables aren't changed to 'None' each time a filter is changed on the front end 
+			if priceCheck is not None:
+				price = priceCheck
+			if startDateCheck is not None:
+				startDate = startDateCheck
+			if endDateCheck is not None:
+				endDate = endDateCheck
+			if weightCheck is not None:
+				weight = weightCheck
+			if availCheck is not None:
+				avail = availCheck
+			if pupCheck is not None:
+				pup = pupCheck
+		#Below are the data base queries 
 		cri1 = Q(min_wt__lte=weight)
 		cri2 = Q(max_wt__gte=weight)
 		cri3 = Q(price__lte=price)
@@ -132,47 +123,105 @@ def dogWalkers_filter(request):
 		cri7 = Q(avbl_to__lte=endDate)
 		cri8 = Q(avbl_from__lte=startDate)
 		cri9 = Q(avbl_to__gte=endDate)
+		cri10 = Q(has_avbl=True)
+		cri11 = Q(acpt_pup=True)
 		print(price)
 		print(weight)
 		print(startDate)
 		print(endDate)
-		print (avail)
-		print(pup)
-		if avail is None:
-			print("entered incorrect None if")
+		print ("avail- ", avail)
+		print("pup- ", pup)
+		if (avail == 'true') and (pup == 'true'):
+			print("enetered true pup and true avail statement")
 			if weight and startDate and endDate and price is not None:
-				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri3 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri3 & cri11 & cri10 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
 			if weight and price is not None:
-				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri3)
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri3 & cri11 & cri10)
 			if weight is not None:
-				dogWalkers=dogWalkers.filter(cri1 & cri2)
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri11 & cri10)
 			if price is not None:
-				dogWalkers=dogWalkers.filter(cri3)
+				dogWalkers=dogWalkers.filter(cri3 & cri11 & cri10)
 			if startDate and endDate and price is not None:
-				dogWalkers=dogWalkers.filter(cri3 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+				dogWalkers=dogWalkers.filter(cri3 & cri11 & cri10 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
 			if startDate and endDate is not None:
-				dogWalkers=dogWalkers.filter(((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+				dogWalkers=dogWalkers.filter(((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)) & cri11 & cri10)
 			if startDate and endDate and weight is not None:
-				dogWalkers=dogWalkers.filter(cri1 & cri2 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
-				#Need to add case where both checkboxes are ticked possibly, I'm not quite sure 
-		if avail == 'false':
-			print("entered availability statement")
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri11 & cri10 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			else:
+				 dogWalkers=dogWalkers.filter(cri11 & cri10)
+		if (pup == 'false') and (avail == 'true'):
+			print("entered false accept_pup and true avail statement")
 			if weight and startDate and endDate and price is not None:
-				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri3 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri3 & cri10 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
 			if weight and price is not None:
-				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri3)
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri3 & cri10)
 			if weight is not None:
-				dogWalkers=dogWalkers.filter(cri1 & cri2)
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri10)
 			if price is not None:
-				dogWalkers=dogWalkers.filter(cri3)
+				dogWalkers=dogWalkers.filter(cri3 & cri10)
 			if startDate and endDate and price is not None:
-				dogWalkers=dogWalkers.filter(cri3 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+				dogWalkers=dogWalkers.filter(cri3 & cri10 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
 			if startDate and endDate is not None:
-				dogWalkers=dogWalkers.filter(((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+				dogWalkers=dogWalkers.filter(cri10 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
 			if startDate and endDate and weight is not None:
-				dogWalkers=dogWalkers.filter(cri1 & cri2 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
-		if pup == 'false':
-			print("entered accept_pup statement")
+				dogWalkers=dogWalkers.filter(cri1 & cri2 &  cri10 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			else:
+				dogWalkers=dogWalkers.filter(cri10)
+		if (pup == 'true') and (avail == 'false'):
+			print("entered false accept_pup and true avail statement")
+			if weight and startDate and endDate and price is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri3 & cri11 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			if weight and price is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri3 & cri11)
+			if weight is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri11)
+			if price is not None:
+				dogWalkers=dogWalkers.filter(cri3 & cri11)
+			if startDate and endDate and price is not None:
+				dogWalkers=dogWalkers.filter(cri3 & cri11 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			if startDate and endDate is not None:
+				dogWalkers=dogWalkers.filter(cri11 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			if startDate and endDate and weight is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2 &  cri11 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			else:
+				dogWalkers=dogWalkers.filter(cri11)
+		if (pup == 'true') and (avail is None):
+			print("entered true accept_pup and None avail statement")
+			if weight and startDate and endDate and price is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri3 & cri11 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			if weight and price is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri3 & cri11)
+			if weight is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri11)
+			if price is not None:
+				dogWalkers=dogWalkers.filter(cri3 & cri11)
+			if startDate and endDate and price is not None:
+				dogWalkers=dogWalkers.filter(cri3 & cri11 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			if startDate and endDate is not None:
+				dogWalkers=dogWalkers.filter(cri11 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			if startDate and endDate and weight is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2 &  cri11 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			else:
+				dogWalkers=dogWalkers.filter(cri11)
+		if (pup is None) and (avail == 'true'):
+			print("entered none accept_pup and true avail statement")
+			if weight and startDate and endDate and price is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri3 & cri10 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			if weight and price is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri3 & cri10)
+			if weight is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri10)
+			if price is not None:
+				dogWalkers=dogWalkers.filter(cri3 & cri10)
+			if startDate and endDate and price is not None:
+				dogWalkers=dogWalkers.filter(cri3 & cri10 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			if startDate and endDate is not None:
+				dogWalkers=dogWalkers.filter(cri10 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			if startDate and endDate and weight is not None:
+				dogWalkers=dogWalkers.filter(cri1 & cri2 &  cri10 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
+			else:
+				dogWalkers=dogWalkers.filter(cri10)
+		else:
 			if weight and startDate and endDate and price is not None:
 				dogWalkers=dogWalkers.filter(cri1 & cri2 & cri3 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
 			if weight and price is not None:
