@@ -4,116 +4,118 @@ import SideBar from './../SideBar';
 import './../Dashboard.css';
 
 const DogWalkerCreateProfile = () => {
-		const [createdProfile, setCreatedProfile] = useState(false);
-		const [username, setUserName] = useState('');
-		const [first_name, setUserFName] = useState('');
-		const [last_name, setUserLName] = useState('');
-		const uploadedImage = React.useRef(null);
-		const imageUploader = React.useRef(null);
-		const [email, setEmail] = useState('');
-		const [postcode, setPostcode] = useState('');
-		const [price, setPrice] = useState('');
-		const [userInfo, setUserInfo] = useState('');
-		const [minWeight, setMinWeight] = useState('');
-		const [maxWeight, setMaxWeight] = useState('');
-		const [errors, setErrors] = useState(false);
-  	const [loading, setLoading] = useState(true);
-  	const [fullName, setUserFullName] = useState('');
-  	const [isAvailable, setIsAvailable] = useState(false);
-  	const [acptPup, setAcptPup] = useState(false);
+	const [createdProfile, setCreatedProfile] = useState(false);
+	const [username, setUserName] = useState('');
+	const [first_name, setUserFName] = useState('');
+	const [last_name, setUserLName] = useState('');
+	const uploadedImage = React.useRef(null);
+	const imageUploader = React.useRef(null);
+	const [email, setEmail] = useState('');
+	const [postcode, setPostcode] = useState('');
+	const [price, setPrice] = useState('');
+	const [userInfo, setUserInfo] = useState('');
+	const [minWeight, setMinWeight] = useState('');
+	const [maxWeight, setMaxWeight] = useState('');
+	const [errors, setErrors] = useState(false);
+	const [loading, setLoading] = useState(true);
+	const [fullName, setUserFullName] = useState('');
+	const [isAvailable, setIsAvailable] = useState(false);
+	const [acptPup, setAcptPup] = useState(false);
+	const [isVerified, setIsVerified] = useState(false);
 
-  	const handleImageUpload = e => {
-  		var imageDiv = document.getElementById('userImage').children;
-  		const [file] = e.target.files;
-  		if(file) {
-  			const reader = new FileReader();
-  			const { current } = uploadedImage;
-  			current.file = file;
-  			if(current.file.size<500000){
-  				imageDiv[4].innerText='';
-	  			reader.onload = e => {
-	  				current.src = e.target.result;
-	  			};
-	  			reader.readAsDataURL(file);
-	  		}
-	  		else{
-	  			console.log("file too big");
-	  			//console.log(imageDiv);
-	  			imageDiv[4].innerText = "Error! Image must be less than 500kb";
-	  		}
-  		}
-  	};
-
-  	const postCodeChange = e => {
-  		setPostcode(fix(e.target.value));
-  		resetPostcodeError();
-  	}
-
-  	const resetPostcodeError = () => {
-  		var postCodeField = document.getElementById('dogWalkerCreateForm').elements[3];
-  		postCodeField.id = "postcode"
-  	};
-
-  	const createDogWalkerProfile = e => {
-  		e.preventDefault();
-
-  		//validate inputs
-  		var isAvailable = false;
-  		var acptPup = false;
-  		var postCodeField = document.getElementById('dogWalkerCreateForm').elements[3];
-  		var isAvailableBtn = document.getElementById('dogWalkerCreateForm').elements[6];
-  		var acptPupBtn = document.getElementById('dogWalkerCreateForm').elements[9];
-  		if(isAvailableBtn.checked)
-  		{
-  			//console.log("Has availability");
-  			isAvailable = true;
+	const handleImageUpload = e => {
+		var imageDiv = document.getElementById('userImage').children;
+		const [file] = e.target.files;
+		if(file) {
+			const reader = new FileReader();
+			const { current } = uploadedImage;
+			current.file = file;
+			if(current.file.size<500000){
+				imageDiv[4].innerText='';
+  			reader.onload = e => {
+  				current.src = e.target.result;
+  			};
+  			reader.readAsDataURL(file);
   		}
   		else{
-  			//console.log("No availability");
-  			isAvailable = false;
+  			console.log("file too big");
+  			//console.log(imageDiv);
+  			imageDiv[4].innerText = "Error! Image must be less than 500kb";
   		}
-  		if(acptPupBtn.checked)
-  		{
-  			//console.log("Accepts puppies");
-  			acptPup = true;
-  		}
-  		else {
-  			//console.log("Doesn't accept puppies");
-  			acptPup = false;
-  		}
-  		if(!isValid(postcode))
-  		{
-  			postCodeField.id = "postcodeInvalid";
-  			return console.log("Invalid postcode");
-  		}
-  		else {
-  			postCodeField.id = "postcode";
-  		}
-  		//If passes validation checks, create a new dogWalker profile and assign the pk of the new profile to the user
-  		const user = {
-  			username: username,
-  			name: fullName,
-  			email: email,
-  			postcode: postcode,
-  			price: price,
-  			usr_info: userInfo,
-  			is_available: isAvailable,
-  			min_weight: minWeight,
-  			max_weight: maxWeight,
-  			acpt_pup: acptPup,
-  			usr_img: handleImageUpload
-  		};
-  		fetch('http://127.0.0.1:8000/api/dogWalkers', {
-  			method: 'POST',
-  			headers: {
-        		'Content-Type': 'application/json'
-      		},
-  			body: JSON.stringify(user)
-  		}).catch(err =>{
-  			console.log(err);
-  		});
-  		console.log(user);
-		console.log("Profile created successfully!");
+		}
+	};
+
+	const postCodeChange = e => {
+		setPostcode(fix(e.target.value));
+		resetPostcodeError();
+	}
+
+	const resetPostcodeError = () => {
+		var postCodeField = document.getElementById('dogWalkerCreateForm').elements[3];
+		postCodeField.id = "postcode"
+	};
+
+	const createDogWalkerProfile = e => {
+		e.preventDefault();
+
+		//validate inputs
+		var isAvailable = false;
+		var acptPup = false;
+		var postCodeField = document.getElementById('dogWalkerCreateForm').elements[3];
+		var isAvailableBtn = document.getElementById('dogWalkerCreateForm').elements[6];
+		var acptPupBtn = document.getElementById('dogWalkerCreateForm').elements[9];
+		if(isAvailableBtn.checked)
+		{
+			//console.log("Has availability");
+			isAvailable = true;
+		}
+		else{
+			//console.log("No availability");
+			isAvailable = false;
+		}
+		if(acptPupBtn.checked)
+		{
+			//console.log("Accepts puppies");
+			acptPup = true;
+		}
+		else {
+			//console.log("Doesn't accept puppies");
+			acptPup = false;
+		}
+		if(!isValid(postcode))
+		{
+			postCodeField.id = "postcodeInvalid";
+			return console.log("Invalid postcode");
+		}
+		else {
+			postCodeField.id = "postcode";
+		}
+		//If passes validation checks, create a new dogWalker profile and assign the pk of the new profile to the user
+		const user = {
+			username: username,
+			name: fullName,
+			email: email,
+			postcode: postcode,
+			price: price,
+			usr_info: userInfo,
+			is_available: isAvailable,
+			min_weight: minWeight,
+			max_weight: maxWeight,
+			acpt_pup: acptPup,
+			usr_img: handleImageUpload,
+			activation_code: 0
+		};
+		fetch('http://127.0.0.1:8000/api/dogWalkers', {
+			method: 'POST',
+			headers: {
+      		'Content-Type': 'application/json'
+    		},
+			body: JSON.stringify(user)
+		}).catch(err =>{
+			console.log(err);
+		});
+		//console.log(user);
+		//console.log("Profile created successfully!");
 		//after profile creation, change form to be edit profile
 
 		const updateUser = {
@@ -129,12 +131,13 @@ const DogWalkerCreateProfile = () => {
 	    });
 	    alert("Profile created successfully!");
 	    window.location.replace('/dashboard');
-		}  
+	}  
 
-  	useEffect(() => {
+	useEffect(() => {
     if (localStorage.getItem('token') === null) {
       window.location.replace('/login');
-    } else {
+    } 
+    else {
       fetch('http://127.0.0.1:8000/api/users/auth/user/', {
         method: 'GET',
         headers: {
@@ -143,6 +146,7 @@ const DogWalkerCreateProfile = () => {
         }
       }).then(res => res.json())
         .then(data => {
+        	setIsVerified(data.account_verified);
       		setUserFName(data.first_name);
 					setUserLName(data.last_name);
 					setEmail(data.email);
@@ -153,15 +157,21 @@ const DogWalkerCreateProfile = () => {
     	};
 	}, []);	
 
-  	useEffect(()=>{
-  		if(createdProfile)
-  		{
-  			window.location.replace('/dogWalkerEditProfile');
-  		}
-  		else{
-  			setLoading(false);
-  		}
-  	},[createdProfile])
+	useEffect(()=>{
+		if(!isVerified){
+			window.location.replace('/dashboard');
+		}
+	},[isVerified])
+
+	useEffect(()=>{
+		if(createdProfile)
+		{
+			window.location.replace('/dogWalkerEditProfile');
+		}
+		else{
+			setLoading(false);
+		}
+	},[createdProfile])
 
 	return (
 	<div>

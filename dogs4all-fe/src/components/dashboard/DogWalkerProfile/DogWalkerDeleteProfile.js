@@ -10,39 +10,49 @@ const DogWalkerDeleteProfile = () => {
 	const [email, setEmail] = useState('');
 	const [createdProfile, setCreatedProfile] = useState(true);
 	const [errors, setErrors] = useState(false);
-  	const [loading, setLoading] = useState(true);
-  	const [profilePK, setProfilePK] = useState(-1); 
+	const [loading, setLoading] = useState(true);
+	const [profilePK, setProfilePK] = useState(-1); 
+	const [isVerified, setIsVerified] = useState(false);
 
-  	useEffect(() => {
-	    if (localStorage.getItem('token') === null) {
-	      window.location.replace('/login');
-	    } 
-	    else {
-	    	fetch('http://127.0.0.1:8000/api/users/auth/user/', {
-		        method: 'GET',
-		        headers: {
-		          'Content-Type': 'application/json',
-		          Authorization: `Token ${localStorage.getItem('token')}`
-		        }})
-	    		.then(res => res.json())
-			    .then(data => {
-			    	setCreatedProfile(data.createdDogWalkerProfile);
-			    	setFirstName(data.first_name);
-			    	setLastName(data.last_name);
-			    	setEmail(data.email);
-					setUserName(data.username);
-        		});
-        		setLoading(false);
-    		};
+	useEffect(() => {
+    if (localStorage.getItem('token') === null) {
+      window.location.replace('/login');
+    } 
+    else {
+    	fetch('http://127.0.0.1:8000/api/users/auth/user/', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Token ${localStorage.getItem('token')}`
+        }})
+  		.then(res => res.json())
+	    .then(data => {
+	    	setIsVerified(data.isVerified);
+	    	setFirstName(data.first_name);
+	    	setLastName(data.last_name);
+	    	setEmail(data.email);
+				setUserName(data.username);
+				setCreatedProfile(data.createdDogWalkerProfile);
+    		});
+  	};
 	}, []);	
 
-  	useEffect(()=>{
-  		console.log("created: "+createdProfile);
-  		if(!createdProfile)
-  		{
-  			window.location.replace('/dogWalkerCreateProfile');
-  		}
-  	},[createdProfile])
+	useEffect(()=>{
+		if(!isVerified){
+			window.location.replace('/dashboard');
+		}
+	},[isVerified])
+
+	useEffect(()=>{
+		//console.log("created: "+createdProfile);
+		if(!createdProfile)
+		{
+			window.location.replace('/dogWalkerCreateProfile');
+		}
+		else{
+			setLoading(false);
+		}
+	},[createdProfile])
 
 	const deleteProfile = () => {
 		//send patch request to set has profile to false

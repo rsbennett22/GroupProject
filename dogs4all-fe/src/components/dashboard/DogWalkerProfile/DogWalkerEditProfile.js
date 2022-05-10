@@ -22,6 +22,8 @@ const DogWalkerEditProfile = () => {
   	const [isAvailable, setIsAvailable] = useState(false);
   	const [acptPup, setAcptPup] = useState(false);
   	const [profilePK, setProfilePK] = useState(-1);
+  	const [base64Img, setBase64Img] = useState('');
+  	const [isVerified, setIsVerified] = useState(false);
 
   	useEffect(() => {
 	    if (localStorage.getItem('token') === null) {
@@ -36,12 +38,19 @@ const DogWalkerEditProfile = () => {
 		        }})
 	    		.then(res => res.json())
 			    .then(data => {
+			    	setIsVerified(data.account_verified);
 			    	setCreatedProfile(data.createdDogWalkerProfile);
 			    	setEmail(data.email);
 					setUserName(data.username);
         		});
     		};
 	}, []);	
+
+  	useEffect(()=>{
+  		if(!isVerified){
+  			window.location.replace('/dashboard');
+  		}
+  	},[isVerified])
 
   	useEffect(()=>{
   		console.log("created: "+createdProfile);
@@ -134,7 +143,7 @@ const DogWalkerEditProfile = () => {
   			min_weight: minWeight,
   			max_weight: maxWeight,
   			acpt_pup: acptPup,
-  			usr_img: handleImageUpload
+  			usr_img: handleImageUpload,
   		};
   		fetch('http://127.0.0.1:8000/api/dogWalkers/'+profilePK, {
   			method: 'PUT',
@@ -220,13 +229,14 @@ const DogWalkerEditProfile = () => {
 	          	<input
 		            name='profile_picture'
 		            type='file'
-		            accept="image/*"
+		            accept="image/jpeg, image/png"
 		            onChange={handleImageUpload}
 		            ref={imageUploader}
 		            alt="Profile picture"
 		            required
 		        />{' '}
 		        <p name="errorMessage"></p>
+		        {imageUploader.name}
 		        <br />
 		    </div>
 		    <div className="dogWalkerForm">

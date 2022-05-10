@@ -1,0 +1,10 @@
+.verifyForm{
+	padding-left: 15px;
+}
+.submitButton{
+	margin-left: 90px;
+}
+.validateError{
+	color: red;
+	margin-left: 73px;
+}

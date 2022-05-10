@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -53,27 +54,31 @@ const Login = () => {
       {loading === false && <h1>Login</h1>}
       {errors === true && <h2>Cannot log in with provided credentials</h2>}
       {loading === false && (
-        <form onSubmit={onSubmit}>
-          <label htmlFor='email'>Email address:</label> <br />
-          <input
-            name='email'
-            type='email'
-            value={email}
-            required
-            onChange={e => setEmail(e.target.value)}
-          />{' '}
-          <br />
-          <label htmlFor='password'>Password:</label> <br />
-          <input
-            name='password'
-            type='password'
-            value={password}
-            required
-            onChange={e => setPassword(e.target.value)}
-          />{' '}
-          <br />
-          <input type='submit' value='Login' />
-        </form>
+        <div className="loginForm">
+          <form onSubmit={onSubmit}>
+            <label htmlFor='email'>Email address:</label> <br />
+            <input
+              name='email'
+              type='email'
+              value={email}
+              required
+              onChange={e => setEmail(e.target.value)}
+            />{' '}
+            <br />
+            <label htmlFor='password'>Password:</label> <br />
+            <input
+              name='password'
+              type='password'
+              value={password}
+              required
+              onChange={e => setPassword(e.target.value)}
+            />{' '}
+            <br />
+            <br />
+            <input type='submit' value='Login' className="loginButtonLogin" />
+            <a href="/signup"><input type='button' value='Signup' className="signupButtonLogin" /></a>
+          </form>
+        </div>
       )}
     </div>
   );

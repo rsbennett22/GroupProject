@@ -13,6 +13,10 @@ import os
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import permission_classes
 
+#mail sending imports
+from django.core.mail import send_mail
+from dogs4all.settings_local import *
+
 @api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
 def dogWalkers_list(request):
@@ -29,6 +33,14 @@ def dogWalkers_list(request):
 		dogWalker_serializer = DogWalkerSerializer(data = dogWalker_data)
 		if dogWalker_serializer.is_valid():
 			dogWalker_serializer.save()
+			activation_code = dogWalker_serializer.data.get('activation_code')
+			#after creating dogWalker, send verification email with the code generated as body
+			send_mail(
+				subject="Verify your account",
+				message="Enter this code on the on the verify page to verify your account!\n"+str(activation_code),
+				from_email=EMAIL_HOST_USER,
+				recipient_list=[RECIPIENT_ADDRESS]
+			)
 			return JsonResponse(dogWalker_serializer.data, status=status.HTTP_201_CREATED)
 
 	'''#delete all dogWalkers

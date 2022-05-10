@@ -1,0 +1,14 @@
+.signupForm {
+	padding-left: 10px;
+}
+.signupButtonSignup {
+	margin-left: 40px;
+	background-color: #0fcf4c;
+	border-color: #0fcf4c;
+	border-style: solid;
+	border-radius: 5px;
+
+}
+.loginButtonSignup {
+	margin-left: 50px;
+}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './Signup.css';
 
 const Signup = () => {
   const [first_name, setFName] = useState('');
@@ -40,7 +41,7 @@ const Signup = () => {
         if (data.key) {
           localStorage.clear();
           localStorage.setItem('token', data.key);
-          window.location.replace('/dashboard');
+          window.location.replace('/verify');
         } else {
           setFName('');
           setLName('');
@@ -57,54 +58,57 @@ const Signup = () => {
     <div>
       {loading === false && <h1>Signup</h1>}
       {errors === true && <h2>Cannot signup with provided credentials</h2>}
-      <form onSubmit={onSubmit}>
-        <label htmlFor='first_name'>First Name:</label> <br />
+      <div className="signupForm">
+        <form onSubmit={onSubmit}>
+          <label htmlFor='first_name'>First Name:</label> <br />
+            <input
+              name='first_name'
+              type='text'
+              value={first_name}
+              onChange={e => setFName(e.target.value)}
+              required
+          />{' '}
+          <br />
+          <label htmlFor='last_name'>Last Name:</label> <br />
+            <input
+              name='last_name'
+              type='text'
+              value={last_name}
+              onChange={e => setLName(e.target.value)}
+              required
+          />{' '}
+          <br />
+          <label htmlFor='email'>Email address:</label> <br />
           <input
-            name='first_name'
-            type='text'
-            value={first_name}
-            onChange={e => setFName(e.target.value)}
+            name='email'
+            type='email'
+            value={email}
+            onChange={e => setEmail(e.target.value)}
             required
-        />{' '}
-        <br />
-        <label htmlFor='last_name'>Last Name:</label> <br />
+          />{' '}
+          <br />
+          <label htmlFor='password1'>Password:</label> <br />
           <input
-            name='last_name'
-            type='text'
-            value={last_name}
-            onChange={e => setLName(e.target.value)}
+            name='password1'
+            type='password'
+            value={password1}
+            onChange={e => setPassword1(e.target.value)}
             required
-        />{' '}
-        <br />
-        <label htmlFor='email'>Email address:</label> <br />
-        <input
-          name='email'
-          type='email'
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          required
-        />{' '}
-        <br />
-        <label htmlFor='password1'>Password:</label> <br />
-        <input
-          name='password1'
-          type='password'
-          value={password1}
-          onChange={e => setPassword1(e.target.value)}
-          required
-        />{' '}
-        <br />
-        <label htmlFor='password2'>Confirm password:</label> <br />
-        <input
-          name='password2'
-          type='password'
-          value={password2}
-          onChange={e => setPassword2(e.target.value)}
-          required
-        />{' '}
-        <br />
-        <input type='submit' value='Signup' />
-      </form>
+          />{' '}
+          <br />
+          <label htmlFor='password2'>Confirm password:</label> <br />
+          <input
+            name='password2'
+            type='password'
+            value={password2}
+            onChange={e => setPassword2(e.target.value)}
+            required
+          />{' '}
+          <br /><br />
+          <input type='submit' value='Signup' className="signupButtonSignup" />
+          <a href="/login"><input type="button" value="Login" className="loginButtonSignup" /></a>
+        </form>
+      </div>
     </div>
   );
 };

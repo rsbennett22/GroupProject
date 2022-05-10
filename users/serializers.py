@@ -13,7 +13,7 @@ from allauth.account.utils import setup_user_email
 class UserSerializer(ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ('first_name', 'last_name','email', 'username', 'createdDogWalkerProfile')
+        fields = ('first_name', 'last_name','email', 'username', 'createdDogWalkerProfile', 'activation_code', 'account_verified')
 
 class RegisterSerializer(serializers.Serializer):
     email = serializers.EmailField(required=allauth_settings.EMAIL_REQUIRED)

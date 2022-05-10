@@ -157,7 +157,13 @@ CORS_ORIGIN_WHITELIST = (
 AUTH_USER_MODEL = 'users.CustomUser'
 
 # Django All Auth config
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_HOST_USER='no.reply.dogs4all@gmail.com'
+EMAIL_HOST_PASSWORD='panpxbvbkczdlaux'
+RECIPIENT_ADDRESS='rafebennett22@gmail.com'
 
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
@@ -197,4 +203,5 @@ REACT_APP_DIR = os.path.join(BASE_DIR, 'dogs4all-fe')
 
 STATICFILES_DIRS = [
     os.path.join(REACT_APP_DIR, 'build', 'static'),
+    os.path.join(BASE_DIR, 'usrImgs'),
 ]

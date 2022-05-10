@@ -15,12 +15,12 @@ import PageNotFound from './components/general/PageNotFound';
 
 //Dashboard views
 import Dashboard from './components/dashboard/Dashboard';
+import Verify from './components/dashboard/Verify/Verify';
 import Logout from './components/dashboard/Logout/Logout';
 import Me from './components/dashboard/Me/Me';
 import DogWalkerCreateProfile from './components/dashboard/DogWalkerProfile/DogWalkerCreateProfile';
 import DogWalkerEditProfile from './components/dashboard/DogWalkerProfile/DogWalkerEditProfile';
 import DogWalkerDeleteProfile from './components/dashboard/DogWalkerProfile/DogWalkerDeleteProfile';
-
 
 const App = () => {
   return (
@@ -32,6 +32,7 @@ const App = () => {
           <Route path='/dogWalkers' element={<DogWalkers />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
+          <Route path='/verify' element={<Verify />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/me' element={<Me />} />
           <Route path='/dogWalkerCreateProfile' element={<DogWalkerCreateProfile />} />

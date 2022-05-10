@@ -9,13 +9,52 @@ from .models import CustomUser
 from .serializers import UserSerializer
 
 from rest_framework.decorators import api_view
-
 from rest_framework.views import APIView
+from django.http.response import JsonResponse
+from django.core.mail import send_mail
+from dogs4all.settings_local import *
+import random
+import string
 
 class UserListView(ListAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAdminUser]
+
+@api_view(['GET'])
+def request_new_code(request):
+    username=request.GET.get('username',"")
+    account = CustomUser.objects.get(username=username)
+
+    if request.method == 'GET':
+        activationCode = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(10))
+
+        user_serializer = UserSerializer(account)
+        account.activation_code = activationCode
+        account.save()
+        
+        print(activationCode)
+        send_mail(
+            subject="Verify your account",
+            message="Enter this code on the on the verify page to verify your account!\n\n"+activationCode,
+            from_email=EMAIL_HOST_USER,
+            recipient_list=[RECIPIENT_ADDRESS]
+        )   
+        return JsonResponse(user_serializer.data)
+    return JsonResponse(status=status.HTTP_400_BAD_REQUEST)
+
+
+'''@api_view(['GET'])
+def send_verification(request, pk):
+    try:
+        user = CustomUser.objects.get(pk=pk)
+    except CustomUser.DoesNotExist:
+        return JsonResponse({'message': 'User does not exist!'}, status=status.HTTP_404_NOT_FOUND)
+
+    if(request.method == 'GET'):
+        user_serializer = UserSerializer(user)
+        activationCode = user_serializer.data.get('activation_code')
+'''
 
 '''@api_view(['GET', 'PUT', 'DELETE'])
 def user_detail(request, pk):

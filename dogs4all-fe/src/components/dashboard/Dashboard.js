@@ -7,7 +7,9 @@ const Dashboard = () => {
   const [user_lname,setUserLName] = useState('');
   const [createdProfile, setCreatedProfile] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isVerified, setIsVerified] = useState(false);
 
+  //check if user has token and is verified
   useEffect(() => {
     if (localStorage.getItem('token') === null) {
       window.location.replace('/login');
@@ -21,6 +23,7 @@ const Dashboard = () => {
       })
         .then(res => res.json())
         .then(data => {
+          setIsVerified(data.account_verified)
           setCreatedProfile(data.createdDogWalkerProfile);
           setUserFName(data.first_name);
           setUserLName(data.last_name);
@@ -30,7 +33,7 @@ const Dashboard = () => {
 
   useEffect(()=>{
     setLoading(false);
-    console.log(createdProfile);
+    //console.log(createdProfile);
   },[createdProfile])
 
   const loadAccountDetails = () => {
@@ -40,7 +43,7 @@ const Dashboard = () => {
   }
 
   function loadLogout(){
-    console.log("clicked logout button");
+    //console.log("clicked logout button");
     var body = document.getElementById("body");
     body.innerText="Are you sure you want to logout?";
   }
@@ -54,19 +57,24 @@ const Dashboard = () => {
           <p>
             Hello <b>{user_fname} {user_lname}</b> (not <b>{user_fname} {user_lname}</b>? <a href="/logout">Log out</a>)
           </p>
-          {createdProfile === false ? (
+          {isVerified === true ? (
             <Fragment>
-              <p>
-                From your account dashboard you can view your <a href="/dogWalkerCreateProfile">Dog Walker Profile</a>, view your <a href="/dogTrainerProfile">Dog Trainer Profile</a> and <a href="/me">edit your account details</a>.
-              </p>
-            </Fragment>
-            ):(
-            <Fragment>
-              <p>
-                From your account dashboard you can view your <a href="/dogWalkerEditProfile">Dog Walker Profile</a>, view your <a href="/dogTrainerProfile">Dog Trainer Profile</a> and <a href="/me">edit your account details</a>.
-              </p>
-            </Fragment>
-            )}
+            {createdProfile === false ? (
+              <Fragment>
+                <p>
+                  From your account dashboard you can view your <a href="/dogWalkerCreateProfile">Dog Walker Profile</a>, view your <a href="/dogTrainerProfile">Dog Trainer Profile</a> and <a href="/me">edit your account details</a>.
+                </p>
+              </Fragment>
+              ):(
+              <Fragment>
+                <p>
+                  From your account dashboard you can view your <a href="/dogWalkerEditProfile">Dog Walker Profile</a>, view your <a href="/dogTrainerProfile">Dog Trainer Profile</a> and <a href="/me">edit your account details</a>.
+                </p>
+              </Fragment>
+              )}
+              </Fragment>
+              ):(
+              <p>Your account isn't verified! Verify it <a href='/verify'>here</a></p>)}
         </div>
       </div>
     </div>
