@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 const Login = () => {
@@ -7,7 +6,6 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState(false);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (localStorage.getItem('token') !== null) {
@@ -26,7 +24,7 @@ const Login = () => {
       password: password
     };
 
-    fetch('http://127.0.0.1:8000/api/users/auth/login/', {
+    fetch('/api/users/auth/login/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -76,7 +74,8 @@ const Login = () => {
             <br />
             <br />
             <input type='submit' value='Login' className="loginButtonLogin" />
-            <a href="/signup"><input type='button' value='Signup' className="signupButtonLogin" /></a>
+            <br />
+            <p className="signupPrompt">Don't have an account? <a href='/signup'>Signup</a></p>
           </form>
         </div>
       )}

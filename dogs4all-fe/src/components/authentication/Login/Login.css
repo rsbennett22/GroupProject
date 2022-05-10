@@ -1,11 +1,12 @@
 .loginForm {
 	padding-left: 10px;
 }
-.signupButtonLogin {
-	margin-left: 50px;
+.signupPrompt {
+	margin-left: 15px;
+	margin-top: 10px;
 }
 .loginButtonLogin {
-	margin-left: 50px;
+	margin-left: 100px;
 	border-color: #0fcf4c;
 	background-color: #0fcf4c;
 	border-style: solid;

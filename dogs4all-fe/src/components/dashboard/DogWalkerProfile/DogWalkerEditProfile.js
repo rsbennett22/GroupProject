@@ -1,4 +1,4 @@
-import React, { useState, useEffect, setState, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { isValid, fix } from 'postcode';
 import SideBar from './../SideBar';
 import './../Dashboard.css';
@@ -6,8 +6,6 @@ import './../Dashboard.css';
 const DogWalkerEditProfile = () => {
 	const [createdProfile, setCreatedProfile] = useState(true);
 	const [username, setUserName] = useState('');
-	const [first_name, setUserFName] = useState('');
-	const [last_name, setUserLName] = useState('');
 	const uploadedImage = React.useRef(null);
 	const imageUploader = React.useRef(null);
 	const [email, setEmail] = useState('');
@@ -16,21 +14,19 @@ const DogWalkerEditProfile = () => {
 	const [userInfo, setUserInfo] = useState('');
 	const [minWeight, setMinWeight] = useState('');
 	const [maxWeight, setMaxWeight] = useState('');
-	const [errors, setErrors] = useState(false);
   	const [loading, setLoading] = useState(true);
   	const [fullName, setUserFullName] = useState('');
   	const [isAvailable, setIsAvailable] = useState(false);
   	const [acptPup, setAcptPup] = useState(false);
   	const [profilePK, setProfilePK] = useState(-1);
-  	const [base64Img, setBase64Img] = useState('');
-  	const [isVerified, setIsVerified] = useState(false);
+  	const [isVerified, setIsVerified] = useState(true);
 
   	useEffect(() => {
 	    if (localStorage.getItem('token') === null) {
 	      window.location.replace('/login');
 	    } 
 	    else {
-	    	fetch('http://127.0.0.1:8000/api/users/auth/user/', {
+	    	fetch('/api/users/auth/user/', {
 		        method: 'GET',
 		        headers: {
 		          'Content-Type': 'application/json',
@@ -53,16 +49,34 @@ const DogWalkerEditProfile = () => {
   	},[isVerified])
 
   	useEffect(()=>{
-  		console.log("created: "+createdProfile);
   		if(!createdProfile){
   			window.location.replace('/dogWalkerCreateProfile');
   		}
   		else{
-	  		getProfileInfo();
+
+  			fetch('/api/dogWalkers/'+username, {
+	        method: 'GET',
+	        headers: {
+	          'Content-Type': 'application/json',
+	          Authorization: `Token ${localStorage.getItem('token')}`
+	        }
+	      }).then(res => res.json())
+	        .then(profileData => {
+	        	setUserFullName(profileData.name);
+	        	setEmail(profileData.email);
+	        	setPostcode(profileData.postcode);
+	        	setPrice(profileData.price);
+	        	setUserInfo(profileData.usr_info);
+	        	setIsAvailable(profileData.is_available);
+	        	setMinWeight(profileData.min_weight);
+	        	setMaxWeight(profileData.max_weight);
+	        	setAcptPup(profileData.acpt_pup);
+	        	setProfilePK(profileData.pk);
+	        });
+
 	  		setLoading(false);
 	  	}
-  	},[username])
-
+  	},[username, createdProfile])
 
   	const handleImageUpload = e => {
   		var imageDiv = document.getElementById('userImage').children;
@@ -145,7 +159,7 @@ const DogWalkerEditProfile = () => {
   			acpt_pup: acptPup,
   			usr_img: handleImageUpload,
   		};
-  		fetch('http://127.0.0.1:8000/api/dogWalkers/'+profilePK, {
+  		fetch('/api/dogWalkers/'+profilePK, {
   			method: 'PUT',
   			headers: {
         		'Content-Type': 'application/json',
@@ -158,28 +172,6 @@ const DogWalkerEditProfile = () => {
   		alert("Profile updated successfully!");
   		window.location.replace('/dashboard');
 	}  
-
-	const getProfileInfo = () => {
-		fetch('http://127.0.0.1:8000/api/dogWalkers/'+username, {
-	        method: 'GET',
-	        headers: {
-	          'Content-Type': 'application/json',
-	          Authorization: `Token ${localStorage.getItem('token')}`
-	        }
-	      }).then(res => res.json())
-	        .then(profileData => {
-	        	setUserFullName(profileData.name);
-	        	setEmail(profileData.email);
-	        	setPostcode(profileData.postcode);
-	        	setPrice(profileData.price);
-	        	setUserInfo(profileData.usr_info);
-	        	setIsAvailable(profileData.is_available);
-	        	setMinWeight(profileData.min_weight);
-	        	setMaxWeight(profileData.max_weight);
-	        	setAcptPup(profileData.acpt_pup);
-	        	setProfilePK(profileData.pk);
-	        });
-	}
 
 	const setIsAvblCheckbox = () => {
 		try{
@@ -225,7 +217,7 @@ const DogWalkerEditProfile = () => {
 	      <form id="dogWalkerEditForm" onSubmit={editDogWalkerProfile}>
 	      	<div className="userImage" id="userImage">
 	      		<label htmlFor='profile_picture'>Profile Picture:</label> <br />
-		      	<img ref={uploadedImage} />
+		      	<img alt="" ref={uploadedImage}/>
 	          	<input
 		            name='profile_picture'
 		            type='file'

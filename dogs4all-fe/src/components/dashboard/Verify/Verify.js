@@ -19,7 +19,7 @@ const UserVerify = () => {
     if (localStorage.getItem('token') === null) {
       window.location.replace('/login');
     } else {
-      fetch('http://127.0.0.1:8000/api/users/auth/user/', {
+      fetch('/api/users/auth/user/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ const UserVerify = () => {
     }
     else{
       //if not verified, set the value of the server auth code
-      fetch('http://127.0.0.1:8000/api/users/auth/user/', {
+      fetch('/api/users/auth/user/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ const UserVerify = () => {
       const user = {
         account_verified: true
       }
-      fetch('http://127.0.0.1:8000/api/users/auth/user/', {
+      fetch('/api/users/auth/user/', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ const UserVerify = () => {
 
   const resendCode = () => {
     //send a request to server to resend verification email
-    fetch('http://127.0.0.1:8000/api/users/resend-code/?username='+userName, {
+    fetch('/api/users/resend-code/?username='+userName, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ const UserVerify = () => {
         }
       });
     //update serverCode
-    fetch('http://127.0.0.1:8000/api/users/auth/user/', {
+    fetch('/api/users/auth/user/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

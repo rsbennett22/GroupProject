@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import SideBar from './../SideBar';
 import './../Dashboard.css';
 
@@ -6,9 +6,6 @@ const Me = () => {
   const [first_name, setUserFName] = useState('');
   const [last_name, setUserLName] = useState('');
   const [email, setEmail] = useState('');
-  const [password1, setPassword1] = useState('');
-  const [password2, setPassword2] = useState('');
-  const [errors, setErrors] = useState(false);
   const [loading, setLoading] = useState(true);
   const [new_password1, setNewPasswordOne] = useState('');
   const [new_password2, setNewPasswordTwo] = useState('');
@@ -22,7 +19,7 @@ const Me = () => {
       last_name: last_name,
       email: email
     };
-    fetch('http://127.0.0.1:8000/api/users/auth/user/', {
+    fetch('/api/users/auth/user/', {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +39,7 @@ const Me = () => {
       new_password2: new_password2,
       old_password: old_password
     };
-    fetch('http://127.0.0.1:8000/api/users/auth/password/change/', {
+    fetch('/api/users/auth/password/change/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -51,7 +48,7 @@ const Me = () => {
       body: JSON.stringify(passwords)
     }).then(res => res.json())
       .then(data => {
-        if(data.detail=="New password has been saved.")
+        if(data.detail==="New password has been saved.")
           {
             console.log("Password successfully changed")
             //log the user out
@@ -77,7 +74,7 @@ const Me = () => {
     if (localStorage.getItem('token') === null) {
       window.location.replace('/login');
     } else {
-      fetch('http://127.0.0.1:8000/api/users/auth/user/', {
+      fetch('/api/users/auth/user/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -173,10 +170,3 @@ const Me = () => {
   );
 };
 export default Me;
-
-/*<div id="rightCol" className="body">
-          <form onSubmit={deleteAccount}>
-            <h5>Delete Account:</h5>
-            <input id="deleteBtn" type='submit' value='Delete Account' />
-          </form>
-        </div>*/

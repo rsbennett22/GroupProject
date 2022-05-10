@@ -1,5 +1,4 @@
-import React, { useState, useEffect, setState, Fragment } from 'react';
-import { isValid, fix } from 'postcode';
+import React, { useState, useEffect } from 'react';
 import SideBar from './../SideBar';
 import './../Dashboard.css';
 
@@ -9,17 +8,15 @@ const DogWalkerDeleteProfile = () => {
 	const [last_name, setLastName] = useState('');
 	const [email, setEmail] = useState('');
 	const [createdProfile, setCreatedProfile] = useState(true);
-	const [errors, setErrors] = useState(false);
 	const [loading, setLoading] = useState(true);
-	const [profilePK, setProfilePK] = useState(-1); 
-	const [isVerified, setIsVerified] = useState(false);
+	const [isVerified, setIsVerified] = useState(true);
 
 	useEffect(() => {
     if (localStorage.getItem('token') === null) {
       window.location.replace('/login');
     } 
     else {
-    	fetch('http://127.0.0.1:8000/api/users/auth/user/', {
+    	fetch('/api/users/auth/user/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -27,7 +24,7 @@ const DogWalkerDeleteProfile = () => {
         }})
   		.then(res => res.json())
 	    .then(data => {
-	    	setIsVerified(data.isVerified);
+	    	setIsVerified(data.account_verified);
 	    	setFirstName(data.first_name);
 	    	setLastName(data.last_name);
 	    	setEmail(data.email);
@@ -63,7 +60,7 @@ const DogWalkerDeleteProfile = () => {
 			username: username,
 			createdDogWalkerProfile: false
 		}
-		fetch('http://127.0.0.1:8000/api/users/auth/user/', {
+		fetch('/api/users/auth/user/', {
 	        method: 'PATCH',
 	        headers: {
 	          'Content-Type': 'application/json',
@@ -71,7 +68,7 @@ const DogWalkerDeleteProfile = () => {
 	        },
 	    	body: JSON.stringify(user)
 	    });
-		fetch('http://127.0.0.1:8000/api/dogWalkers/'+username, {
+		fetch('/api/dogWalkers/'+username, {
 	        method: 'DELETE',
 	        headers: {
 	          'Content-Type': 'application/json',
@@ -84,6 +81,7 @@ const DogWalkerDeleteProfile = () => {
 
 	return (
 	<div>
+	{loading===false}
 	  <SideBar />
 	  <div className="dashboard">
 	    <h1>Delete Account</h1>

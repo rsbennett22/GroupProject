@@ -5,12 +5,13 @@ const SideBar = () => {
 
 	const [createdProfile, setCreatedProfile] = useState(false);
 	const [isVerifed, setIsVerified] = useState(false);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		if (localStorage.getItem('token') === null) {
       window.location.replace('/login');
     } else {
-      fetch('http://127.0.0.1:8000/api/users/auth/user/', {
+      fetch('/api/users/auth/user/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -26,13 +27,13 @@ const SideBar = () => {
     }
   }, []);
 
-	const setCurrentActive = (id) => {
-		var element = document.getElementById(id);
-		element.className="menuDiv_active";
-	}
+	useEffect(()=>{
+		setLoading(false);
+	},[createdProfile])
 
 	return (
 		<div>
+		{loading === false}
 			{isVerifed === true ?(
 				<Fragment>
 				{createdProfile === false ? (
@@ -64,7 +65,7 @@ const SideBar = () => {
 				        </h6>
 				        <hr></hr>
 				        <h6>
-				          <a href="#" className="link">
+				          <a href="*" className="link">
 				            <div id="dogTrainerProfile" className="menuDiv">
 				              Dog Trainer Profile
 				            </div>
@@ -110,7 +111,7 @@ const SideBar = () => {
 				        </h6>
 				        <hr></hr>
 				        <h6>
-				          <a href="#" className="link">
+				          <a href="*" className="link">
 				            <div id="dogTrainerProfile" className="menuDiv">
 				              Dog Trainer Profile
 				            </div>

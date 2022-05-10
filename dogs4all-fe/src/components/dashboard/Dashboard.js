@@ -14,7 +14,7 @@ const Dashboard = () => {
     if (localStorage.getItem('token') === null) {
       window.location.replace('/login');
     } else {
-      fetch('http://127.0.0.1:8000/api/users/auth/user/', {
+      fetch('/api/users/auth/user/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -36,17 +36,6 @@ const Dashboard = () => {
     //console.log(createdProfile);
   },[createdProfile])
 
-  const loadAccountDetails = () => {
-    console.log("clicked account details button");
-    var body = document.getElementById("body");
-    body.innerText="Account details";
-  }
-
-  function loadLogout(){
-    //console.log("clicked logout button");
-    var body = document.getElementById("body");
-    body.innerText="Are you sure you want to logout?";
-  }
   return (
     <div>
       <SideBar />

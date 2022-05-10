@@ -2,13 +2,14 @@
 	padding-left: 10px;
 }
 .signupButtonSignup {
-	margin-left: 40px;
+	margin-left: 97px;
 	background-color: #0fcf4c;
 	border-color: #0fcf4c;
 	border-style: solid;
 	border-radius: 5px;
 
 }
-.loginButtonSignup {
-	margin-left: 50px;
+.loginPrompt {
+	margin-top: 10px;
+	margin-left: 15px;
 }

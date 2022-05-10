@@ -29,7 +29,7 @@ const Signup = () => {
       password2: password2
     };
 
-    fetch('http://127.0.0.1:8000/api/users/auth/register/', {
+    fetch('/api/users/auth/register/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -106,7 +106,8 @@ const Signup = () => {
           />{' '}
           <br /><br />
           <input type='submit' value='Signup' className="signupButtonSignup" />
-          <a href="/login"><input type="button" value="Login" className="loginButtonSignup" /></a>
+          <p className='loginPrompt'>Already have an account? <a href='/login'>Login</a></p>
+          <br /><br />
         </form>
       </div>
     </div>

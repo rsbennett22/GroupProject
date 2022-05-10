@@ -1,4 +1,4 @@
-import React, { useState, useEffect, setState, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import { isValid, fix } from 'postcode';
 import SideBar from './../SideBar';
 import './../Dashboard.css';
@@ -6,8 +6,6 @@ import './../Dashboard.css';
 const DogWalkerCreateProfile = () => {
 	const [createdProfile, setCreatedProfile] = useState(false);
 	const [username, setUserName] = useState('');
-	const [first_name, setUserFName] = useState('');
-	const [last_name, setUserLName] = useState('');
 	const uploadedImage = React.useRef(null);
 	const imageUploader = React.useRef(null);
 	const [email, setEmail] = useState('');
@@ -16,12 +14,9 @@ const DogWalkerCreateProfile = () => {
 	const [userInfo, setUserInfo] = useState('');
 	const [minWeight, setMinWeight] = useState('');
 	const [maxWeight, setMaxWeight] = useState('');
-	const [errors, setErrors] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [fullName, setUserFullName] = useState('');
-	const [isAvailable, setIsAvailable] = useState(false);
-	const [acptPup, setAcptPup] = useState(false);
-	const [isVerified, setIsVerified] = useState(false);
+	const [isVerified, setIsVerified] = useState(true);
 
 	const handleImageUpload = e => {
 		var imageDiv = document.getElementById('userImage').children;
@@ -105,7 +100,7 @@ const DogWalkerCreateProfile = () => {
 			usr_img: handleImageUpload,
 			activation_code: 0
 		};
-		fetch('http://127.0.0.1:8000/api/dogWalkers', {
+		fetch('/api/dogWalkers', {
 			method: 'POST',
 			headers: {
       		'Content-Type': 'application/json'
@@ -121,7 +116,7 @@ const DogWalkerCreateProfile = () => {
 		const updateUser = {
 	      createdDogWalkerProfile:true
 	    };
-	    fetch('http://127.0.0.1:8000/api/users/auth/user/', {
+	    fetch('/api/users/auth/user/', {
 	      method: 'PATCH',
 	      headers: {
 	        'Content-Type': 'application/json',
@@ -138,7 +133,7 @@ const DogWalkerCreateProfile = () => {
       window.location.replace('/login');
     } 
     else {
-      fetch('http://127.0.0.1:8000/api/users/auth/user/', {
+      fetch('/api/users/auth/user/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -147,8 +142,6 @@ const DogWalkerCreateProfile = () => {
       }).then(res => res.json())
         .then(data => {
         	setIsVerified(data.account_verified);
-      		setUserFName(data.first_name);
-					setUserLName(data.last_name);
 					setEmail(data.email);
 					setUserName(data.username);
 					setUserFullName(data.first_name+" "+data.last_name);
@@ -184,7 +177,7 @@ const DogWalkerCreateProfile = () => {
 	      <form id="dogWalkerCreateForm" onSubmit={createDogWalkerProfile}>
 	      	<div className="userImage" id="userImage">
 	      		<label htmlFor='profile_picture'>Profile Picture:</label> <br />
-		      	<img ref={uploadedImage} />
+		      	<img alt="" ref={uploadedImage} />
 	          	<input
 		            name='profile_picture'
 		            type='file'
