@@ -3,6 +3,7 @@ import SideBar from './../SideBar';
 import './../Dashboard.css';
 
 const Me = () => {
+
   const [first_name, setUserFName] = useState('');
   const [last_name, setUserLName] = useState('');
   const [email, setEmail] = useState('');
@@ -11,6 +12,7 @@ const Me = () => {
   const [new_password2, setNewPasswordTwo] = useState('');
   const [old_password, setOldPassword]= useState('');
 
+  //update current logged in user's info when submit clicked
   const onSubmitCreds = e => {
     e.preventDefault();
 
@@ -31,6 +33,7 @@ const Me = () => {
     window.location.replace('/dashboard');
   }
 
+  //update users password, remove token, load logout page
   const onSubmitPass = e => {
     e.preventDefault();
 
@@ -70,6 +73,8 @@ const Me = () => {
         }
       );
   }
+
+  //on page load, check if user has a token, then get the logged in user's info
   useEffect(() => {
     if (localStorage.getItem('token') === null) {
       window.location.replace('/login');

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Signup.css';
 
 const Signup = () => {
+
   const [first_name, setFName] = useState('');
   const [last_name, setLName] = useState('');
   const [email, setEmail] = useState('');
@@ -10,6 +11,7 @@ const Signup = () => {
   const [errors, setErrors] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  //check if user has token, if they do, load the dashboard
   useEffect(() => {
     if (localStorage.getItem('token') !== null) {
       window.location.replace('/dashboard');
@@ -18,6 +20,7 @@ const Signup = () => {
     }
   }, []);
 
+  //when user clicks submit button, send required info to db via api to create a new user
   const onSubmit = e => {
     e.preventDefault();
 
@@ -38,10 +41,11 @@ const Signup = () => {
     })
       .then(res => res.json())
       .then(data => {
+        //give user a key once signed up
         if (data.key) {
           localStorage.clear();
           localStorage.setItem('token', data.key);
-          window.location.replace('/verify');
+          window.location.replace('/dashboard');
         } else {
           setFName('');
           setLName('');

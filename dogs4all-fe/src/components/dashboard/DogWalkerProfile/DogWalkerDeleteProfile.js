@@ -3,6 +3,7 @@ import SideBar from './../SideBar';
 import './../Dashboard.css';
 
 const DogWalkerDeleteProfile = () => {
+
 	const [username, setUserName] = useState('');
 	const [first_name, setFirstName] = useState('');
 	const [last_name, setLastName] = useState('');
@@ -11,6 +12,7 @@ const DogWalkerDeleteProfile = () => {
 	const [loading, setLoading] = useState(true);
 	const [isVerified, setIsVerified] = useState(true);
 
+	//on page load, check if user has a token, if they do, GET logged in user's info
 	useEffect(() => {
     if (localStorage.getItem('token') === null) {
       window.location.replace('/login');
@@ -34,12 +36,14 @@ const DogWalkerDeleteProfile = () => {
   	};
 	}, []);	
 
+	//check if account is verified, load dashboard if not
 	useEffect(()=>{
 		if(!isVerified){
 			window.location.replace('/dashboard');
 		}
 	},[isVerified])
 
+	//check if user has created a dogWalker profile, if not load create profile page
 	useEffect(()=>{
 		//console.log("created: "+createdProfile);
 		if(!createdProfile)
@@ -51,6 +55,7 @@ const DogWalkerDeleteProfile = () => {
 		}
 	},[createdProfile])
 
+	//send api request to: set createdDogWalkerProfile to false and delete the user's created dogWalker profile using the user's username
 	const deleteProfile = () => {
 		//send patch request to set has profile to false
 		const user = {

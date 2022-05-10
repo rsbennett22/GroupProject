@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 import './general.css';
 
+//when user goes to a url not specified in App.js, load this page
+
 const PageNotFound = () => {
 
 	const goBack = () => {

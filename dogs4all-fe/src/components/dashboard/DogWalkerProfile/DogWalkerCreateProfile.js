@@ -4,6 +4,7 @@ import SideBar from './../SideBar';
 import './../Dashboard.css';
 
 const DogWalkerCreateProfile = () => {
+
 	const [createdProfile, setCreatedProfile] = useState(false);
 	const [username, setUserName] = useState('');
 	const uploadedImage = React.useRef(null);
@@ -18,6 +19,7 @@ const DogWalkerCreateProfile = () => {
 	const [fullName, setUserFullName] = useState('');
 	const [isVerified, setIsVerified] = useState(true);
 
+	//function works for setting image
 	const handleImageUpload = e => {
 		var imageDiv = document.getElementById('userImage').children;
 		const [file] = e.target.files;
@@ -40,16 +42,19 @@ const DogWalkerCreateProfile = () => {
 		}
 	};
 
+	//when user changes postcode field, 'fix' input (ensures the input in correct format), reset any errors with postcode
 	const postCodeChange = e => {
 		setPostcode(fix(e.target.value));
 		resetPostcodeError();
 	}
 
+	//reset postcode field back to no-error state
 	const resetPostcodeError = () => {
 		var postCodeField = document.getElementById('dogWalkerCreateForm').elements[3];
 		postCodeField.id = "postcode"
 	};
 
+	//check values of fields in form, send a POST request to api endpoint with data to create a dogWalker profile
 	const createDogWalkerProfile = e => {
 		e.preventDefault();
 
@@ -109,10 +114,8 @@ const DogWalkerCreateProfile = () => {
 		}).catch(err =>{
 			console.log(err);
 		});
-		//console.log(user);
-		//console.log("Profile created successfully!");
-		//after profile creation, change form to be edit profile
 
+		//set the createdDogWalkerProfile attribute in the user info to true, load the dashboard
 		const updateUser = {
 	      createdDogWalkerProfile:true
 	    };
@@ -128,6 +131,7 @@ const DogWalkerCreateProfile = () => {
 	    window.location.replace('/dashboard');
 	}  
 
+	//on page load get the logged in user's info
 	useEffect(() => {
     if (localStorage.getItem('token') === null) {
       window.location.replace('/login');
@@ -150,12 +154,14 @@ const DogWalkerCreateProfile = () => {
     	};
 	}, []);	
 
+	//once isVerified attribute has been set, check value, if not verified, load the dashboard
 	useEffect(()=>{
 		if(!isVerified){
 			window.location.replace('/dashboard');
 		}
 	},[isVerified])
 
+	//once createdProfile is set, check value, if true, load edit profile page
 	useEffect(()=>{
 		if(createdProfile)
 		{

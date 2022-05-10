@@ -7,15 +7,17 @@ const Login = () => {
   const [errors, setErrors] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  //check if user has a token in local storage, load dashboard if they do
   useEffect(() => {
     if (localStorage.getItem('token') !== null) {
-      //navigate('/dashboard');
       window.location.replace('/dashboard');
     } else {
+      //if not, load page elements
       setLoading(false);
     }
   }, []);
 
+  //when user submits login form, check email and password against db to see if credentials match
   const onSubmit = e => {
     e.preventDefault();
 
@@ -33,11 +35,11 @@ const Login = () => {
     })
       .then(res => res.json())
       .then(data => {
+        //give use a token
         if (data.key) {
           localStorage.clear();
           localStorage.setItem('token', data.key);
           window.location.replace('/dashboard');
-          //navigate('/dashboard');
         } else {
           setEmail('');
           setPassword('');

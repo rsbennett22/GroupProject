@@ -1,8 +1,11 @@
 # Python
 *.pyc
 *~
+
+#Backend
 __pycache__
 db.sqlite3
+settings_local.py
 
 # Frontend
 node_modules/

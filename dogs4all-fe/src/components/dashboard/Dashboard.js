@@ -3,6 +3,7 @@ import SideBar from './SideBar';
 import './Dashboard.css';
 
 const Dashboard = () => {
+
   const [user_fname,setUserFName] = useState('');
   const [user_lname,setUserLName] = useState('');
   const [createdProfile, setCreatedProfile] = useState(false);
@@ -33,9 +34,9 @@ const Dashboard = () => {
 
   useEffect(()=>{
     setLoading(false);
-    //console.log(createdProfile);
   },[createdProfile])
 
+  //if account not verified, set the body of the dashboard page to display info for account not verified, else, load normal page
   return (
     <div>
       <SideBar />

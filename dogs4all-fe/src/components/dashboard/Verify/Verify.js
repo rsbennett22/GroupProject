@@ -5,16 +5,12 @@ import './../Dashboard.css';
 
 const UserVerify = () => {
 
-  //input field for user to enter the verification code
-  //check if code entered matches code stored
-  //if does, set verified to true
-
   const [inputCode, setInputCode] = useState('');
   const [serverCode, setServerCode] = useState('');
   const [isVerified, setIsVerified] = useState(false);
   const [userName, setUsername] = useState('');
 
-  //check if account is verified
+  //check if user has a token and the account is verified
   useEffect(()=>{
     if (localStorage.getItem('token') === null) {
       window.location.replace('/login');
@@ -55,6 +51,7 @@ const UserVerify = () => {
     }
   },[isVerified])
 
+  //when user changes input in the verification input field, update constant inputCode and hide the error message
   const codeChange = e => {
     setInputCode(e.target.value)
     var errorMessage = document.getElementById('validateError');
@@ -88,8 +85,8 @@ const UserVerify = () => {
     }
   }
 
+  //send a request to server to resend verification email
   const resendCode = () => {
-    //send a request to server to resend verification email
     fetch('/api/users/resend-code/?username='+userName, {
         method: 'GET',
         headers: {

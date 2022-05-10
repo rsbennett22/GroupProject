@@ -3,8 +3,10 @@ import SideBar from './../SideBar';
 import './../Dashboard.css';
 
 const Logout = () => {
+
   const [loading, setLoading] = useState(true);
 
+  //on page load, check if user has a token
   useEffect(() => {
     if (localStorage.getItem('token') == null) {
       window.location.replace('/login');
@@ -13,6 +15,7 @@ const Logout = () => {
     }
   }, []);
 
+  //call the api logout endpoint, remove token from user's local storage and load the login page
   const handleLogout = e => {
     e.preventDefault();
 

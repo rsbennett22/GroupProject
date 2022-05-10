@@ -7,6 +7,7 @@ const SideBar = () => {
 	const [isVerifed, setIsVerified] = useState(false);
 	const [loading, setLoading] = useState(true);
 
+	//on page load, check if user has a token and if they are verified
 	useEffect(() => {
 		if (localStorage.getItem('token') === null) {
       window.location.replace('/login');
@@ -31,6 +32,7 @@ const SideBar = () => {
 		setLoading(false);
 	},[createdProfile])
 
+	//if user is verified, display dogWalker and dogTrainer profile options, else hide them and display verify account option
 	return (
 		<div>
 		{loading === false}

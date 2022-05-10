@@ -4,6 +4,7 @@ import SideBar from './../SideBar';
 import './../Dashboard.css';
 
 const DogWalkerEditProfile = () => {
+
 	const [createdProfile, setCreatedProfile] = useState(true);
 	const [username, setUserName] = useState('');
 	const uploadedImage = React.useRef(null);
@@ -21,6 +22,7 @@ const DogWalkerEditProfile = () => {
   	const [profilePK, setProfilePK] = useState(-1);
   	const [isVerified, setIsVerified] = useState(true);
 
+  	//on page load, check if user has a token, then get the user's info
   	useEffect(() => {
 	    if (localStorage.getItem('token') === null) {
 	      window.location.replace('/login');
@@ -42,18 +44,20 @@ const DogWalkerEditProfile = () => {
     		};
 	}, []);	
 
+  	//check if user is verified, load dashboard page if not
   	useEffect(()=>{
   		if(!isVerified){
   			window.location.replace('/dashboard');
   		}
   	},[isVerified])
 
+  	//check if user has created a dogWalker profile, if not load create dogWalker page
   	useEffect(()=>{
   		if(!createdProfile){
   			window.location.replace('/dogWalkerCreateProfile');
   		}
   		else{
-
+  			//if has created a profile, get dogWalker profile info using the user's username with api endpoint
   			fetch('/api/dogWalkers/'+username, {
 	        method: 'GET',
 	        headers: {
@@ -78,6 +82,7 @@ const DogWalkerEditProfile = () => {
 	  	}
   	},[username, createdProfile])
 
+  	//doesn't work - does set the image correctly but doesn't work with api requests
   	const handleImageUpload = e => {
   		var imageDiv = document.getElementById('userImage').children;
   		const [file] = e.target.files;
@@ -100,16 +105,19 @@ const DogWalkerEditProfile = () => {
   		}
   	};
 
+  	//when user modifies postcode field, correct the formatting with fix() and remove any previous errors
   	const postCodeChange = e => {
   		setPostcode(fix(e.target.value));
   		resetPostcodeError();
   	}
 
+  	//hides any errors from postcode input
   	const resetPostcodeError = () => {
   		var postCodeField = document.getElementById('dogWalkerCreateForm').elements[3];
   		postCodeField.id = "postcode"
   	};
 
+  	//check values of fields in form, send the data to backend via api endpoint to update the user's dogWalker profile
   	const editDogWalkerProfile = e => {
   		e.preventDefault();
 
@@ -173,6 +181,7 @@ const DogWalkerEditProfile = () => {
   		window.location.replace('/dashboard');
 	}  
 
+	//once page is loaded, depending on value of isAvailable, set whether checkbox is checked or not
 	const setIsAvblCheckbox = () => {
 		try{
   			var isAvailableBtn = document.getElementById('dogWalkerEditForm').elements[6];
@@ -188,7 +197,8 @@ const DogWalkerEditProfile = () => {
   			//console.log("undefined");
   		}
 	}
-
+	
+	//once page is loaded, depending on value of acptPup, set whether checkbox is checked or not
 	const setAcptPupCheckbox = () => {
 		try{
   			var acptPupBtn = document.getElementById('dogWalkerEditForm').elements[9];
