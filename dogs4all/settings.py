@@ -141,7 +141,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000',
+    https://dogs4all-2eh3j.ondigitalocean.app,
 )
 
 REACT_APP_DIR = os.path.join(BASE_DIR, 'dogs4all-fe')
