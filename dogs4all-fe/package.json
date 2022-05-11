@@ -17,8 +17,12 @@
     "react": "^18.0.0",
     "react-datepicker": "^4.7.0",
     "react-dom": "^18.0.0",
+    "react-icons": "^4.3.1",
+    "react-native": "^0.68.2",
+    "react-native-web": "^0.17.7",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
+    "react-stars-display": "^0.1.24",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
