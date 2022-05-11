@@ -8,7 +8,16 @@ import { format } from 'date-fns';
 
 
 
+import Stars from "react-stars-display"
+import {Text,View} from "react-native"
+import {FcCalendar,FcMoneyTransfer,FcAbout,FcOk,FcCancel,FcAddressBook,FcRating,FcLandscape,FcPicture,FcNightPortrait} from "react-icons/fc";
+import {FaLocationArrow,FaDog,FaWeightHanging} from "react-icons/fa"
+
+import Popup from './Popup';
+
+
 const DogWalkers = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const [dogWalkers, setDogWalkers] = useState([]);
   useEffect(() => {
     getDogWalkers();
@@ -30,14 +39,9 @@ const DogWalkers = () => {
   const acptPuppy = () => {
     var isChecked = document.getElementById("acpt_pup");
     if(isChecked.checked){
-      axios.get('/api/dogWalkers/filter?pup=' + true)
-      .then((res) => {
-        console.log(res);
-        setDogWalkers(res.data);      
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    var avbl = [...dogWalkers].filter((a) => a.acpt_pup === true);
+    setDogWalkers(avbl)
+    console.log(avbl);
   }
   else 
   {
@@ -55,14 +59,9 @@ const DogWalkers = () => {
   const hasAvbl = () => {
     var isChecked = document.getElementById("has_avbl");
     if(isChecked.checked){
-      axios.get('/api/dogWalkers/filter?avail=' + true)
-      .then((res) => {
-        console.log(res);
-        setDogWalkers(res.data);      
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    var avbl = [...dogWalkers].filter((a) => a.has_avbl === true);
+    setDogWalkers(avbl)
+    console.log(avbl);
   }
   else 
   {
@@ -76,6 +75,7 @@ const DogWalkers = () => {
       });
   }
   };
+
 
 
 //Price Slider filter hook and method
@@ -110,6 +110,7 @@ const DogWalkers = () => {
   }
 
 
+
   //used for the date picker 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
@@ -134,6 +135,7 @@ const DogWalkers = () => {
 
 
   //Method for 'reset filter' button
+  //Method for 'reset filter' button
   const reset = () =>{
     axios.get('/api/dogWalkers/filter?avbl_from=' + null + '&avbl_to=' + null + '&weight=' + null + '&price=' + null + '&avail=' + null + '&pup=' + null + '&avail=' + null + '&pup=' + null)
     getDogWalkers();
@@ -156,6 +158,7 @@ const DogWalkers = () => {
 //   }   
 // }
 
+
   
   //'sort by' buttons
   const numDesc = () => {
@@ -175,7 +178,7 @@ const DogWalkers = () => {
   }
   
 
-  //Used to mark start, middle and end of price slider
+  //Used to mark start, middle and end of slider
   const mark=[
     {value: 0,
       label: "£0"},
@@ -185,7 +188,6 @@ const DogWalkers = () => {
       label: "£30"}
   ]
 
-  //Used to mark start, middle and end of weight slider
   const mark2=[
     {value: 0,
       label: "0"},
@@ -198,6 +200,10 @@ const DogWalkers = () => {
     {value: 120,
       label: "120"}
   ]
+
+  const viewMoreDetails = () => {
+    setIsOpen(!isOpen);
+  };
 
   return(
     //side bar
@@ -213,6 +219,8 @@ const DogWalkers = () => {
         <input type="checkbox" id="has_avbl" onClick={() => hasAvbl()}/>
         <label for="">Has availability?</label>
         <hr></hr>
+
+
   
         <h6>Weight of your dog:</h6>
         <div style={{width: 200, margin:60}}>
@@ -220,13 +228,15 @@ const DogWalkers = () => {
         valueLabelDisplay='auto' 
         onChangeCommitted={handleWeightChange} marks={mark2}
         />
+        
 
         <h6>Price range (£/hour):</h6>
         <div style={{width:160, margin:24}}>
         <Slider id = "slider" defaultValue = {null} max={30} step = {1} 
         valueLabelDisplay='auto' 
         onChangeCommitted={handleChange} marks={mark}
-        />     
+        />
+        
 
       </div>
       </div>
@@ -246,18 +256,52 @@ const DogWalkers = () => {
         <div>
         {dogWalkers.map((dogWalker) => (
           <div className="walker" key={dogWalker.id}>
-            <hr></hr>
-            {<h4>{dogWalker.name}</h4>/*//would add more data using a similar command */}
-            <p>{dogWalker.usr_info}</p> 
-            <h6>Price:</h6>
-            <p>{dogWalker.price}</p>
-            <h6>Rating:</h6>
-            <p>{dogWalker.rating}</p>
-            <p>{dogWalker.avbl_from}</p>
-            <p>{dogWalker.avbl_to}</p>
-            <h6>Min and Max weight:</h6>
-            <p>{dogWalker.min_wt +"kg"}</p>
-            <p>{dogWalker.max_wt+ "kg"}</p>
+            <div className = "walker_name"> <h4>{dogWalker.name +  " "}</h4> </div>
+            <div className = "about_btn"><button onClick={() => viewMoreDetails()}><FcAbout/></button> </div>
+           <br></br>
+            <i>{dogWalker.usr_info}</i> 
+            <p><FcRating/><strong> Rating: </strong>{dogWalker.rating}</p>
+            <Stars
+            stars={dogWalker.rating}
+            size={40} //optional
+            spacing={2} //optional
+            fill='#ea9c46' //optional
+            />
+            <img src="{% static dogWalker.profile_pic.url %}" alt = "Profile Image"/>
+            <p><strong><FcMoneyTransfer/> Price: £</strong>{dogWalker.price}</p>
+            <p><FcCalendar/><strong> Available From  : </strong>{dogWalker.avbl_from}</p>
+            <p><FcCalendar/><strong> Available Until : </strong>{dogWalker.avbl_to}</p>
+            <p><FaLocationArrow/><strong> Postcode : </strong>{dogWalker.postcode}</p>
+            
+            {dogWalker.acpt_pup && <p><FaDog/><strong> Accepts Puppy : <FcOk/></strong>{dogWalker.acpt_pup}</p>}
+          
+
+            {isOpen && <Popup
+              content={<>
+                <h5>Additional Details</h5>
+                <p><FcAbout/><strong> Name: </strong>{dogWalker.name}</p>
+                <p><FcAddressBook/><strong> Email: </strong>{dogWalker.email}</p>
+                <p><FcRating/><strong> Rating: </strong>{dogWalker.rating}</p>
+                <p><FcMoneyTransfer/><strong> Price: £</strong>{dogWalker.price}</p>
+                <p><FcCalendar/><strong> Available From  : </strong>{dogWalker.avbl_from}</p>
+                <p><FcCalendar/><strong> Available Until : </strong>{dogWalker.avbl_to}</p>
+                <p><FaLocationArrow/><strong> Postcode : </strong>{dogWalker.postcode}</p>
+
+                {dogWalker.acpt_pup && <p><FaDog/><strong> Accepts Puppy : <FcOk/></strong>{dogWalker.acpt_pup}</p>}
+                <p><FaWeightHanging/><strong> Min Weight: </strong>{dogWalker.min_wt +"kg"}</p>
+                <p><FaWeightHanging/><strong> Max Weight: </strong>{dogWalker.max_wt+ "kg"}</p>        
+
+              </>}
+              handleClose={viewMoreDetails}
+            />}
+
+            <View
+              style={{
+                borderBottomColor: 'black',
+                borderBottomWidth: 2,
+              }}
+            />
+          
           </div>
           ))}
         </div>

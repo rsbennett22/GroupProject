@@ -238,4 +238,3 @@ def dogWalkers_filter(request):
 				dogWalkers=dogWalkers.filter(cri1 & cri2 & ((cri4 & cri5) | (cri6 & cri7) | (cri8 & cri9)))
 		dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
 		return JsonResponse(dogWalker_serializer.data, safe=False)
- 
