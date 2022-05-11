@@ -21,7 +21,7 @@ const Me = () => {
       last_name: last_name,
       email: email
     };
-    fetch('/api/users/auth/user/', {
+    fetch('/api/v1/users/auth/user/', {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ const Me = () => {
       new_password2: new_password2,
       old_password: old_password
     };
-    fetch('/api/users/auth/password/change/', {
+    fetch('/api/v1/users/auth/password/change/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ const Me = () => {
           {
             console.log("Password successfully changed")
             //log the user out
-            fetch('/api/users/auth/logout/', {
+            fetch('/api/v1/users/auth/logout/', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ const Me = () => {
     if (localStorage.getItem('token') === null) {
       window.location.replace('/login');
     } else {
-      fetch('/api/users/auth/user/', {
+      fetch('/api/v1/users/auth/user/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

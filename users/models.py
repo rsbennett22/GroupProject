@@ -12,7 +12,7 @@ import string
 class CustomUser(AbstractUser):
     createdDogWalkerProfile=models.BooleanField(default=False)
     account_verified = models.BooleanField(default=False)
-    activation_code = models.CharField(default='0000', max_length=10)
+    activation_code = models.CharField(default='0000000000', max_length=10)
     def __str__(self):
         return self.email
 

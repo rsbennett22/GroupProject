@@ -18,7 +18,7 @@ const DogWalkerDeleteProfile = () => {
       window.location.replace('/login');
     } 
     else {
-    	fetch('/api/users/auth/user/', {
+    	fetch('/api/v1/users/auth/user/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ const DogWalkerDeleteProfile = () => {
 			username: username,
 			createdDogWalkerProfile: false
 		}
-		fetch('/api/users/auth/user/', {
+		fetch('/api/v1/users/auth/user/', {
 	        method: 'PATCH',
 	        headers: {
 	          'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ const DogWalkerDeleteProfile = () => {
 	        },
 	    	body: JSON.stringify(user)
 	    });
-		fetch('/api/dogWalkers/'+username, {
+		fetch('/api/v1/dogWalker/'+username, {
 	        method: 'DELETE',
 	        headers: {
 	          'Content-Type': 'application/json',

@@ -19,7 +19,7 @@ const Logout = () => {
   const handleLogout = e => {
     e.preventDefault();
 
-    fetch('/api/users/auth/logout/', {
+    fetch('/api/v1/users/auth/logout/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

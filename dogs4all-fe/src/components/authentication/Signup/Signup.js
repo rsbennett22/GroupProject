@@ -32,7 +32,7 @@ const Signup = () => {
       password2: password2
     };
 
-    fetch('/api/users/auth/register/', {
+    fetch('/api/v1/users/auth/register/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

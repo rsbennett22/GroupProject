@@ -103,12 +103,12 @@ const DogWalkerCreateProfile = () => {
 			max_weight: maxWeight,
 			acpt_pup: acptPup,
 			usr_img: handleImageUpload,
-			activation_code: 0
 		};
-		fetch('/api/dogWalkers', {
+		fetch('/api/v1/dogWalker/create', {
 			method: 'POST',
 			headers: {
-      		'Content-Type': 'application/json'
+      		'Content-Type': 'application/json',
+      		Authorization: `Token ${localStorage.getItem('token')}`,
     		},
 			body: JSON.stringify(user)
 		}).catch(err =>{
@@ -119,7 +119,7 @@ const DogWalkerCreateProfile = () => {
 		const updateUser = {
 	      createdDogWalkerProfile:true
 	    };
-	    fetch('/api/users/auth/user/', {
+	    fetch('/api/v1/users/auth/user/', {
 	      method: 'PATCH',
 	      headers: {
 	        'Content-Type': 'application/json',
@@ -137,7 +137,7 @@ const DogWalkerCreateProfile = () => {
       window.location.replace('/login');
     } 
     else {
-      fetch('/api/users/auth/user/', {
+      fetch('/api/v1/users/auth/user/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

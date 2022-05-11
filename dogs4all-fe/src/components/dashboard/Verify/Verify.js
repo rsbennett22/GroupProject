@@ -15,7 +15,7 @@ const UserVerify = () => {
     if (localStorage.getItem('token') === null) {
       window.location.replace('/login');
     } else {
-      fetch('/api/users/auth/user/', {
+      fetch('/api/v1/users/auth/user/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ const UserVerify = () => {
     }
     else{
       //if not verified, set the value of the server auth code
-      fetch('/api/users/auth/user/', {
+      fetch('/api/v1/users/auth/user/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ const UserVerify = () => {
       const user = {
         account_verified: true
       }
-      fetch('/api/users/auth/user/', {
+      fetch('/api/v1/users/auth/user/', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ const UserVerify = () => {
         }
       });
     //update serverCode
-    fetch('/api/users/auth/user/', {
+    fetch('/api/v1/users/auth/user/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

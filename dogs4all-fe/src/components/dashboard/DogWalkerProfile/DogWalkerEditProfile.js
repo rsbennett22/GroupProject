@@ -28,7 +28,7 @@ const DogWalkerEditProfile = () => {
 	      window.location.replace('/login');
 	    } 
 	    else {
-	    	fetch('/api/users/auth/user/', {
+	    	fetch('/api/v1/users/auth/user/', {
 		        method: 'GET',
 		        headers: {
 		          'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ const DogWalkerEditProfile = () => {
   		}
   		else{
   			//if has created a profile, get dogWalker profile info using the user's username with api endpoint
-  			fetch('/api/dogWalkers/'+username, {
+  			fetch('/api/v1/dogWalker/'+username, {
 	        method: 'GET',
 	        headers: {
 	          'Content-Type': 'application/json',
@@ -167,7 +167,7 @@ const DogWalkerEditProfile = () => {
   			acpt_pup: acptPup,
   			usr_img: handleImageUpload,
   		};
-  		fetch('/api/dogWalkers/'+profilePK, {
+  		fetch('/api/v1/dogWalker/'+profilePK, {
   			method: 'PUT',
   			headers: {
         		'Content-Type': 'application/json',

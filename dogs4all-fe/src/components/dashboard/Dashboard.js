@@ -15,7 +15,7 @@ const Dashboard = () => {
     if (localStorage.getItem('token') === null) {
       window.location.replace('/login');
     } else {
-      fetch('/api/users/auth/user/', {
+      fetch('/api/v1/users/auth/user/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

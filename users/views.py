@@ -32,7 +32,7 @@ def request_new_code(request):
         user_serializer = UserSerializer(account)
         account.activation_code = activationCode
         account.save()
-        
+
         print(activationCode)
         send_mail(
             subject="Verify your account",
@@ -40,7 +40,7 @@ def request_new_code(request):
             from_email=EMAIL_HOST_USER,
             recipient_list=[RECIPIENT_ADDRESS]
         )   
-        return JsonResponse(user_serializer.data)
+        return JsonResponse({'message': "Generated new activation code"})
     return JsonResponse(status=status.HTTP_400_BAD_REQUEST)
 
 

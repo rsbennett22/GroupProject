@@ -20,7 +20,7 @@ from homepage.views import Homepage
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^api/', include('dogWalkers.urls')),
-    url(r'^api/users/', include('users.urls')),
+    url(r'^api/v1/', include('dogWalkers.urls')),
+    url(r'^api/v1/users/', include('users.urls')),
     url(r'^', Homepage.as_view()),
 ]

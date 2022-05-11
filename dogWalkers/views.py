@@ -23,21 +23,23 @@ def dogWalkers_list(request):
 		dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
 		return JsonResponse(dogWalker_serializer.data, safe=False)
 
-	#create a new dogWalker
-	elif request.method == 'POST':
+	'''#delete all dogWalkers
+	elif  request.method == 'DELETE':
+		count = DogWalker.objects.all().delete()
+		return JsonResponse({'message':'{} DogWalkers were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)'''
+
+@api_view(['POST'])
+def dogWalker_create(request):
+#create a new dogWalker
+	if request.method == 'POST':
 		dogWalker_data = JSONParser().parse(request)
 		dogWalker_serializer = DogWalkerSerializer(data = dogWalker_data)
 		if dogWalker_serializer.is_valid():
 			dogWalker_serializer.save()
 			return JsonResponse(dogWalker_serializer.data, status=status.HTTP_201_CREATED)
 
-	'''#delete all dogWalkers
-	elif  request.method == 'DELETE':
-		count = DogWalker.objects.all().delete()
-		return JsonResponse({'message':'{} DogWalkers were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)'''
-
 @api_view(['GET', 'PUT', 'DELETE'])
-def dogWalkers_detail_pk(request, pk):
+def dogWalker_detail_pk(request, pk):
 	#find dogWalker by primary key (pk), the id
 	try:
 		dogWalker = DogWalker.objects.get(pk=pk)
@@ -64,7 +66,7 @@ def dogWalkers_detail_pk(request, pk):
 		return JsonResponse({'message': 'DogWalker successfully deleted!'}, status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def dogWalkers_detail_username(request, username):
+def dogWalker_detail_username(request, username):
 	#find dogWalker by email, the id
 	try:
 		dogWalker = DogWalker.objects.get(username=username)
