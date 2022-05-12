@@ -175,7 +175,7 @@ const DogWalkerEditProfile = () => {
   			acpt_pup: acptPup,
   			usr_img: handleImageUpload,
   		};
-  		fetch('/api/v1/dogWalker/'+profilePK, {
+  		fetch('/api/v1/dogWalker/'+username, {
   			method: 'PUT',
   			headers: {
         		'Content-Type': 'application/json',
