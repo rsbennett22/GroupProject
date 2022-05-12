@@ -1,14 +1,15 @@
 {
   "files": {
-    "main.css": "./static/css/main.0ae3767c.css",
-    "main.js": "./static/js/main.18971241.js",
+    "main.css": "./static/css/main.bbe5fb6a.css",
+    "main.js": "./static/js/main.70c2bd83.js",
+    "static/media/gdpr.pdf": "./static/media/gdpr.6d2201f89399dcdc7b06.pdf",
     "static/media/world.jpg": "./static/media/world.96d0a6a70f161192355d.jpg",
     "index.html": "./index.html",
-    "main.0ae3767c.css.map": "./static/css/main.0ae3767c.css.map",
-    "main.18971241.js.map": "./static/js/main.18971241.js.map"
+    "main.bbe5fb6a.css.map": "./static/css/main.bbe5fb6a.css.map",
+    "main.70c2bd83.js.map": "./static/js/main.70c2bd83.js.map"
   },
   "entrypoints": [
-    "static/css/main.0ae3767c.css",
-    "static/js/main.18971241.js"
+    "static/css/main.bbe5fb6a.css",
+    "static/js/main.70c2bd83.js"
   ]
 }

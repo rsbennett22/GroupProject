@@ -32,6 +32,11 @@ const NavBar = () => {
 											Dog Walkers
 										</NavLink>
 									</li>
+									<li className="nav-link">
+										<NavLink className="nav-link" to="/dogTrainers">
+											Dog Trainers
+										</NavLink>
+									</li>
 									<li id="dashboard" className="nav-link">
 										<NavLink className="nav-link" to="/dashboard">
 											My Account
@@ -57,6 +62,11 @@ const NavBar = () => {
 									<li className="nav-link">
 										<NavLink className="nav-link" to="/dogWalkers">
 											Dog Walkers
+										</NavLink>
+									</li>
+									<li className="nav-link">
+										<NavLink className="nav-link" to="/dogTrainers">
+											Dog Trainers
 										</NavLink>
 									</li>
 									<li id="dashboard" className="nav-link">

@@ -41,10 +41,22 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
+
+    #third party
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'rest_auth.registration',
+    'corsheaders',
     'django_filters',
+
+    #local apps
     'dogWalkers.apps.DogWalkersConfig',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -149,6 +161,59 @@ REACT_APP_DIR = os.path.join(BASE_DIR, 'dogs4all-fe')
 STATICFILES_DIRS = [
     os.path.join(REACT_APP_DIR, 'build', 'static'),
 ]
+
+# Points to the custom user model
+AUTH_USER_MODEL = 'users.CustomUser'
+
+# Django All Auth config
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_HOST_USER='no.reply.dogs4all@gmail.com'
+EMAIL_HOST_PASSWORD=os.getenv("HOST_PASSWORD")
+
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+SITE_ID = 1
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_UNIQUE_USERNAME = True
+OLD_PASSWORD_FIELD_ENABLED = True
+
+# Rest Framework config
+REST_FRAMEWORK = {
+    'DATETIME_FORMAT': "%m/%d/%Y %I:%M%P",
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
+
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'users.serializers.UserSerializer',
+}
+REST_AUTH_REGISTER_SERIALIZERS = {
+        'REGISTER_SERIALIZER': 'users.serializers.RegisterSerializer',
+}
+
+REACT_APP_DIR = os.path.join(BASE_DIR, 'dogs4all-fe')
+
+STATICFILES_DIRS = [
+    os.path.join(REACT_APP_DIR, 'build', 'static'),
+    os.path.join(BASE_DIR, 'usrImgs'),
+]
+
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

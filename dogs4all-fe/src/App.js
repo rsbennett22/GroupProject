@@ -11,6 +11,7 @@ import Signup from './components/authentication/Signup/Signup';
 //page views
 import Home from './components/homepage/Home';
 import DogWalkers from './components/dogWalkers/DogWalkers';
+import DogTrainers from './components/dogTrainers/index';
 import PageNotFound from './components/general/PageNotFound';
 
 //Dashboard views
@@ -30,6 +31,7 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/dogWalkers' element={<DogWalkers />} />
+          <Route path='/dogTrainers' element={<DogTrainers />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/verify' element={<Verify />} />

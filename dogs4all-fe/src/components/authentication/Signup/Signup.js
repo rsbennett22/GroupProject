@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Signup.css';
+import pdf from './gdpr.pdf';
 
 const Signup = () => {
 
@@ -10,6 +11,7 @@ const Signup = () => {
   const [password2, setPassword2] = useState('');
   const [errors, setErrors] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [acptPolicy, setAcptPolicy] = useState(false);
 
   //check if user has token, if they do, load the dashboard
   useEffect(() => {
@@ -99,7 +101,7 @@ const Signup = () => {
             onChange={e => setPassword1(e.target.value)}
             required
           />{' '}
-          <br />
+          <p>Password must include at leat one special character, number, uppercase and lowercase letter</p>
           <label htmlFor='password2'>Confirm password:</label> <br />
           <input
             name='password2'
@@ -109,7 +111,10 @@ const Signup = () => {
             required
           />{' '}
           <br /><br />
-          <input type='submit' value='Signup' className="signupButtonSignup" />
+          <label htmlFor='acptPolicy'>Have you read and accepted our <a href={pdf}>privacy policy?</a></label>
+          <input type='checkbox' className="privacyCheckbox" required/>
+          <br /><br />
+          <input type='submit' value='Signup' className="signupButtonSignup"/>
           <p className='loginPrompt'>Already have an account? <a href='/login'>Login</a></p>
           <br /><br />
         </form>
