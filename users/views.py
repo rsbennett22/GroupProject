@@ -25,10 +25,8 @@ class UserListView(ListAPIView):
 def request_new_code(request):
     username=request.GET.get('username',"")
     account = CustomUser.objects.get(username=username)
-
     if request.method == 'GET':
         activationCode = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(10))
-
         user_serializer = UserSerializer(account)
         account.activation_code = activationCode
         account.save()
@@ -38,7 +36,7 @@ def request_new_code(request):
             subject="Verify your account",
             message="Enter this code on the on the verify page to verify your account!\n\n"+activationCode,
             from_email=EMAIL_HOST_USER,
-            recipient_list=[RECIPIENT_ADDRESS]
+            recipient_list=[account.email]
         )   
         return JsonResponse({'message': "Generated new activation code"})
     return JsonResponse(status=status.HTTP_400_BAD_REQUEST)

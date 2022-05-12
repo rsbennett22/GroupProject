@@ -87,7 +87,7 @@ const UserVerify = () => {
 
   //send a request to server to resend verification email
   const resendCode = () => {
-    fetch('/api/users/resend-code/?username='+userName, {
+    fetch('/api/v1/users/resend-code/?username='+userName, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

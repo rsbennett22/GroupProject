@@ -99,7 +99,7 @@ const DogWalkers = () => {
   const handleWeightChange = (event, weight) => {
     setWeight(weight);
     console.log(weight);
-    axios.get('/api/dogWalkers/filter?weight='+ weight)
+    axios.get('/api/v1/dogWalkers/filter?weight='+ weight)
     .then((res) => {
       console.log(res);
       setDogWalkers(res.data);
@@ -299,6 +299,7 @@ const DogWalkers = () => {
               style={{
                 borderBottomColor: 'black',
                 borderBottomWidth: 2,
+                zIndex: -1,
               }}
             />
           
