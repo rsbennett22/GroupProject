@@ -3,14 +3,14 @@ import React, { useState, useEffect } from 'react';
 import './DogWalkers.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css'
-import {Slider, Input} from '@material-ui/core'
+import { Slider } from '@material-ui/core'
 import { format } from 'date-fns';
 
 
 
 import Stars from "react-stars-display"
-import {Text,View} from "react-native"
-import {FcCalendar,FcMoneyTransfer,FcAbout,FcOk,FcCancel,FcAddressBook,FcRating,FcLandscape,FcPicture,FcNightPortrait} from "react-icons/fc";
+import { View } from "react-native"
+import {FcCalendar,FcMoneyTransfer,FcAbout,FcOk,FcAddressBook,FcRating} from "react-icons/fc";
 import {FaLocationArrow,FaDog,FaWeightHanging} from "react-icons/fa"
 
 import Popup from './Popup';
@@ -24,7 +24,7 @@ const DogWalkers = () => {
   }, []);
   
   const getDogWalkers = () => {
-    axios.get('/api/dogWalkers')
+    axios.get('/api/v1/dogWalkers')
     .then((res) => {
       console.log(res);
       setDogWalkers(res.data);
@@ -45,7 +45,7 @@ const DogWalkers = () => {
   }
   else 
   {
-    axios.get('/api/dogWalkers/filter?pup=' + false)
+    axios.get('/api/v1/dogWalkers/filter?pup=' + false)
       .then((res) => {
         console.log(res);
         setDogWalkers(res.data);      
@@ -65,7 +65,7 @@ const DogWalkers = () => {
   }
   else 
   {
-    axios.get('/api/dogWalkers/filter?avail=' + false)
+    axios.get('/api/v1/dogWalkers/filter?avail=' + false)
       .then((res) => {
         console.log(res);
         setDogWalkers(res.data);      
@@ -84,7 +84,7 @@ const DogWalkers = () => {
   const handleChange = (event, value) => {
     setValue(value);
     console.log(value);
-    axios.get('/api/dogWalkers/filter?price='+ value)                                                                     
+    axios.get('/api/v1/dogWalkers/filter?price='+ value)                                                                     
     .then((res) => {                                                        
       console.log(res);                                         
        setDogWalkers(res.data);      
@@ -122,7 +122,7 @@ const DogWalkers = () => {
     setEndDate(end);
     console.log(format(new Date(start), 'yyyy-MM-dd'))
     console.log(format(new Date(end), 'yyyy-MM-dd'))
-    axios.get('/api/dogWalkers/filter?avbl_from=' + (format(new Date(start), 'yyyy-MM-dd')) + '&avbl_to=' + (format(new Date(end), 'yyyy-MM-dd')))
+    axios.get('/api/v1/dogWalkers/filter?avbl_from=' + (format(new Date(start), 'yyyy-MM-dd')) + '&avbl_to=' + (format(new Date(end), 'yyyy-MM-dd')))
     .then((res) => {
       console.log(res);
         setDogWalkers(res.data);
@@ -137,7 +137,7 @@ const DogWalkers = () => {
   //Method for 'reset filter' button
   //Method for 'reset filter' button
   const reset = () =>{
-    axios.get('/api/dogWalkers/filter?avbl_from=' + null + '&avbl_to=' + null + '&weight=' + null + '&price=' + null + '&avail=' + null + '&pup=' + null + '&avail=' + null + '&pup=' + null)
+    axios.get('/api/v1/dogWalkers/filter?avbl_from=' + null + '&avbl_to=' + null + '&weight=' + null + '&price=' + null + '&avail=' + null + '&pup=' + null + '&avail=' + null + '&pup=' + null)
     getDogWalkers();
 
   }
@@ -267,7 +267,7 @@ const DogWalkers = () => {
             spacing={2} //optional
             fill='#ea9c46' //optional
             />
-            <img src="{% static dogWalker.profile_pic.url %}" alt = "Profile Image"/>
+            <img src="{% static dogWalker.usr_img.url %}" alt = "Profile Pic"/>
             <p><strong><FcMoneyTransfer/> Price: £</strong>{dogWalker.price}</p>
             <p><FcCalendar/><strong> Available From  : </strong>{dogWalker.avbl_from}</p>
             <p><FcCalendar/><strong> Available Until : </strong>{dogWalker.avbl_to}</p>
@@ -288,8 +288,8 @@ const DogWalkers = () => {
                 <p><FaLocationArrow/><strong> Postcode : </strong>{dogWalker.postcode}</p>
 
                 {dogWalker.acpt_pup && <p><FaDog/><strong> Accepts Puppy : <FcOk/></strong>{dogWalker.acpt_pup}</p>}
-                <p><FaWeightHanging/><strong> Min Weight: </strong>{dogWalker.min_wt +"kg"}</p>
-                <p><FaWeightHanging/><strong> Max Weight: </strong>{dogWalker.max_wt+ "kg"}</p>        
+                <p><FaWeightHanging/><strong> Min Weight: </strong>{dogWalker.min_weight +"kg"}</p>
+                <p><FaWeightHanging/><strong> Max Weight: </strong>{dogWalker.max_weight+ "kg"}</p>        
 
               </>}
               handleClose={viewMoreDetails}

@@ -12,37 +12,36 @@ import logging
 import os
 from django.db.models import Q
 import json
-
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import permission_classes
 
 startDate = None
 endDate = None
 weight = None
 price = None
 
-@api_view(['GET', 'POST', 'DELETE'])
+@api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
 def dogWalkers_list(request):
 
-    #get all the dogWalkers
-    if request.method == 'GET':
-        dogWalkers = DogWalker.objects.all()
-        dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
-        return JsonResponse(dogWalker_serializer.data, safe=False)
+	#get all the dogWalkers
+	if request.method == 'GET':
+		dogWalkers = DogWalker.objects.all()
+		dogWalker_serializer = DogWalkerSerializer(dogWalkers, many=True)
+		return JsonResponse(dogWalker_serializer.data, safe=False)
 
-    #create a new dogWalker
-    elif request.method == 'POST':
-        dogWalker_data = JSONParser().parse(request)
-        dogWalker_serializer = DogWalkerSerializer(data = dogWalker_data)
-        if dogWalker_serializer.is_valid():
-            dogWalker_serializer.save()
-            return JsonResponse(dogWalker_serializer.data, status=status.HTTP_201_CREATED)
-
-    #delete all dogWalkers
-    elif  request.method == 'DELETE':
-        count = DogWalker.objects.all().delete()
-        return JsonResponse({'message':'{} DogWalkers were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)
+@api_view(['POST'])
+def dogWalker_create(request):
+#create a new dogWalker
+	if request.method == 'POST':
+		dogWalker_data = JSONParser().parse(request)
+		dogWalker_serializer = DogWalkerSerializer(data = dogWalker_data)
+		if dogWalker_serializer.is_valid():
+			dogWalker_serializer.save()
+			return JsonResponse(dogWalker_serializer.data, status=status.HTTP_201_CREATED)
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def dogWalkers_detail(request, pk):
+def dogWalker_detail_pk(request, pk):
     #find dogWalker by primary key (pk), the id
     try:
         dogWalker = DogWalker.objects.get(pk=pk)
@@ -68,6 +67,32 @@ def dogWalkers_detail(request, pk):
         dogWalker.delete()
         return JsonResponse({'message': 'DogWalker successfully deleted!'}, status=status.HTTP_204_NO_CONTENT)
 
+@api_view(['GET', 'PUT', 'DELETE'])
+def dogWalker_detail_username(request, username):
+	#find dogWalker by email, the id
+	try:
+		dogWalker = DogWalker.objects.get(username=username)
+	except DogWalker.DoesNotExist:
+		return JsonResponse({'message': 'DogWalker does not exist!'}, status=status.HTTP_404_NOT_FOUND)
+
+	#retrieve a single dogWalker
+	if request.method == 'GET':
+		dogWalker_serializer = DogWalkerSerializer(dogWalker)
+		return JsonResponse(dogWalker_serializer.data)
+
+	#update a dogWalker
+	elif request.method == 'PUT':
+		dogWalker_data = JSONParser().parse(request)
+		dogWalker_serializer = DogWalkerSerializer(dogWalker, data=dogWalker_data)
+		if dogWalker_serializer.is_valid():
+			dogWalker_serializer.save()
+			return JsonResponse(dogWalker_serializer.data)
+		return JsonResponse(dogWalker_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+	#delete a single dogWalker
+	elif request.method == 'DELETE':
+		dogWalker.delete()
+		return JsonResponse({'message': 'DogWalker successfully deleted!'}, status=status.HTTP_204_NO_CONTENT)
 
 
 startDate = None
@@ -78,6 +103,7 @@ avail = None
 pup = None
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def dogWalkers_filter(request):
 	if request.method == "GET":
 		global startDate
@@ -114,8 +140,8 @@ def dogWalkers_filter(request):
 			if pupCheck is not None:
 				pup = pupCheck
 		#Below are the data base queries 
-		cri1 = Q(min_wt__lte=weight)
-		cri2 = Q(max_wt__gte=weight)
+		cri1 = Q(min_weight__lte=weight)
+		cri2 = Q(max_weight__gte=weight)
 		cri3 = Q(price__lte=price)
 		cri4 = Q(avbl_from__gte=startDate)
 		cri5 = Q(avbl_from__lte=endDate)
@@ -123,7 +149,7 @@ def dogWalkers_filter(request):
 		cri7 = Q(avbl_to__lte=endDate)
 		cri8 = Q(avbl_from__lte=startDate)
 		cri9 = Q(avbl_to__gte=endDate)
-		cri10 = Q(has_avbl=True)
+		cri10 = Q(is_avbl=True)
 		cri11 = Q(acpt_pup=True)
 		print(price)
 		print(weight)

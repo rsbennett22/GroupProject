@@ -18,14 +18,9 @@ from django.urls import path
 from django.conf.urls import url, include
 from homepage.views import Homepage
 
-
-from django.conf.urls.static import static
-from django.conf import settings
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^api/', include('dogWalkers.urls')),
+    url(r'^api/v1/', include('dogWalkers.urls')),
+    url(r'^api/v1/users/', include('users.urls')),
     url(r'^', Homepage.as_view()),
 ]
-
-urlpatterns += static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)
