@@ -137,7 +137,7 @@ const DogWalkers = () => {
   //Method for 'reset filter' button
   //Method for 'reset filter' button
   const reset = () =>{
-    axios.get('/api/v1/dogWalkers/filter?avbl_from=' + null + '&avbl_to=' + null + '&weight=' + null + '&price=' + null + '&avail=' + null + '&pup=' + null + '&avail=' + null + '&pup=' + null)
+    axios.get('/api/v1/dogWalkers/filter?avbl_from=' + null + '&avbl_to=' + null + '&weight=' + 0 + '&price=' + null + '&avail=' + null + '&pup=' + null + '&avail=' + null + '&pup=' + null)
     getDogWalkers();
 
   }
@@ -244,7 +244,6 @@ const DogWalkers = () => {
         <DatePicker selected ={startDate} onChange={onDateChange} 
         startDate={startDate} endDate={endDate} dateFormat="dd/MM/yyyy" defaultValue = {null}
         minDate={new Date()} isClearable selectsRange inline/>
-        <button onClick={onDateChange, handleChange, handleWeightChange}>Apply filters</button>
         <button onClick={reset}>Reset filters</button>
       </div>
 
