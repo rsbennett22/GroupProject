@@ -156,6 +156,15 @@ CORS_ORIGIN_WHITELIST = (
 # Points to the custom user model
 AUTH_USER_MODEL = 'users.CustomUser'
 
+# Django All Auth config
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_HOST_USER='no.reply.dogs4all@gmail.com'
+EMAIL_HOST_PASSWORD='panpxbvbkczdlaux'
+RECIPIENT_ADDRESS='rafebennett22@gmail.com'
+
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
