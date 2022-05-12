@@ -37,5 +37,5 @@ def user_signed_up_(request, user, **kwargs):
         subject="Verify your account",
         message="Enter this code on the on the verify page to verify your account!\n\n"+activationCode,
         from_email=EMAIL_HOST_USER,
-        recipient_list=[RECIPIENT_ADDRESS]
+        recipient_list=[user]
     )
