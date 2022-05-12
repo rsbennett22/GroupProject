@@ -162,8 +162,8 @@ EMAIL_PORT=587
 EMAIL_USE_TLS=True
 EMAIL_HOST='smtp.gmail.com'
 EMAIL_HOST_USER='no.reply.dogs4all@gmail.com'
-EMAIL_HOST_PASSWORD='panpxbvbkczdlaux'
-RECIPIENT_ADDRESS='rafebennett22@gmail.com'
+EMAIL_HOST_PASSWORD=
+RECIPIENT_ADDRESS=
 
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
