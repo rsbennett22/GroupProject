@@ -10,7 +10,7 @@ import _ from "lodash";
 
 const CheckboxGroup = CheckBox.Group;
 
-// 真实联调解开下面的代码
+// Real link unpack the notes below
 // const apiGetTrainningList = _.debounce((req, cb) => {
 //   let data = null,
 //     err = null;
@@ -21,7 +21,7 @@ const CheckboxGroup = CheckBox.Group;
 //     .finally(() => cb(err, data));
 // }, 300);
 
-// 仅供本地查看页面使用，真实联调需要把此方法注释掉
+// Only for local viewing pages, real syndication needs to comment out this method
 const apiGetTrainningList = (req, cb) =>
   setTimeout(() => {
     const total = 100;
