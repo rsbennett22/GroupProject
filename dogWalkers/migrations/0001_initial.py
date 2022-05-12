@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='DogWalker',
+            name='DogTraining',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=100)),
@@ -23,14 +23,12 @@ class Migration(migrations.Migration):
                 ('usr_info', models.TextField()),
                 ('avbl_from', models.DateField()),
                 ('avbl_to', models.DateField()),
-                ('avbl_morn', models.BooleanField()),
-                ('avbl_aftn', models.BooleanField()),
-                ('avbl_eve', models.BooleanField()),
                 ('acpt_7k', models.BooleanField()),
                 ('acpt_18k', models.BooleanField()),
                 ('acpt_45k', models.BooleanField()),
                 ('acpt_abv_45k', models.BooleanField()),
-                ('acpt_pup', models.BooleanField()),
+                ('acpt_Trainer', models.BooleanField()),
             ],
         ),
     ]
+
